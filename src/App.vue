@@ -5,35 +5,7 @@ useTitle('Hello, Vue')
 </script>
 
 <template>
-  <div class="app-component">
-    <RouterView class="page" />
+  <div class="w-full h-full">
+    <RouterView class="w-full h-full" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use 'shared/styles/transitions';
-@use 'shared/styles/constants';
-@use 'shared/styles/mixins';
-
-.app-component {
-  @include mixins.size(fill);
-
-  .page {
-    @include mixins.size(fill);
-  }
-}
-</style>
-
-<style lang="scss">
-@use 'shared/styles/mixins';
-
-@import 'core/styles/globals';
-@import 'core/styles/typography';
-@import 'core/styles/externals';
-
-#app {
-  @include mixins.size(fill);
-  position: absolute;
-  display: flex;
-}
-</style>

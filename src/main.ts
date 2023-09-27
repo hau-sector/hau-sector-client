@@ -5,6 +5,10 @@ import ToastService from 'primevue/toastservice'
 import App from '@/App.vue'
 import { homeRoute } from '@/home/router'
 import { primeVueConfig } from '@/core/constants/prime-vue-config'
+import './index.css'
+import 'primevue/resources/primevue.min.css'
+import 'primevue/resources/themes/soho-light/theme.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 const app = createApp(App)
 

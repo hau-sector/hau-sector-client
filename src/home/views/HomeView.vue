@@ -3,20 +3,12 @@ import VueSvg from '@/home/assets/vue.svg'
 </script>
 
 <template>
-  <div class="home-view">
-    <VueSvg class="icon" />
+  <div class="flex flex-col justify-center items-center gap-10">
+    <VueSvg class=" w-52 h-52" />
+
+    <div class="flex gap-2">
+      <span class="text-2xl font-bold text-primary">Vue 3</span>
+      <span class="text-2xl">modular template</span>
+    </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use "@/shared/styles/mixins";
-
-.home-view {
-  display: flex;
-
-  .icon {
-    @include mixins.size(200px);
-    margin: auto;
-  }
-}
-</style>
