@@ -29,6 +29,7 @@ useTitle('Hello, Vue')
 
 @import 'core/styles/globals';
 @import 'core/styles/typography';
+@import 'core/styles/externals';
 
 #app {
   @include mixins.size(fill);
