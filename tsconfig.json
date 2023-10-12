@@ -17,7 +17,6 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "allowJs": true,
-    "sourceMap": true,
     "types": ["webpack-env", "vite/client"],
     "paths": {
       "@/*": ["src/*"]

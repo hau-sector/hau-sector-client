@@ -4,6 +4,10 @@ type PrimeVueConfiguration = ReturnType<typeof usePrimeVue>['config']
 
 export const primeVueConfig: PrimeVueConfiguration = {
   ripple: true,
+  ptOptions: {
+    mergeSections: true,
+    mergeProps: true,
+  },
   locale: {
     fileSizeTypes: ['Б', 'КБ', 'МБ', 'ГБ', 'ТБ'],
     firstDayOfWeek: 0,
