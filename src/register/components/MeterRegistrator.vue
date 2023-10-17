@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { tryOnMounted, tryOnUnmounted } from '@vueuse/core'
+import { syncRefs, tryOnMounted, tryOnUnmounted } from '@vueuse/core'
 import { computed, ref } from 'vue'
 import InputNumber from 'primevue/inputnumber'
 import Button from 'primevue/button'
+import { useRegistratorStore } from '@/core/stores/registrator'
 import { MeterType } from '@/register/constants/meter-type'
 
 const props = defineProps<{
@@ -20,6 +21,27 @@ const meta = computed(() => metas[props.type])
 const hidden = ref<Boolean>(true)
 tryOnMounted(() => setTimeout(() => hidden.value = false, 10))
 tryOnUnmounted(() => hidden.value = true)
+
+const { currentData, sendData, editData } = useRegistratorStore()
+
+const current = computed(() => currentData.value[props.type])
+const currentValue = computed(() => current.value?.value)
+const value = ref<number>()
+syncRefs(currentValue, value)
+
+const buttonDisabled = computed(() => !value.value || (!!current.value && value.value === currentValue.value))
+
+function submit() {
+  if (value.value) {
+    if (current.value) {
+      if (value.value !== currentValue.value)
+        editData(props.type, value.value)
+    }
+    else {
+      sendData(props.type, value.value)
+    }
+  }
+}
 </script>
 
 <template>
@@ -46,12 +68,24 @@ tryOnUnmounted(() => hidden.value = true)
       <div class="flex gap-5">
         <span class="p-float-label flex-1">
           <InputNumber
-            id="number-input" class="w-full" :min-fraction-digits="2"
-            :max-fraction-digits="5"
+            id="number-input"
+            v-model="value"
+            class="w-full"
+            :min-fraction-digits="2"
+            :max-fraction-digits="3"
+            @keyup.enter="submit"
+            @input="value = $event.value"
           />
-          <label for="number-input">Введите показание</label>
+          <label for="number-input">Показание</label>
         </span>
-        <Button severity="success" raised label="Отправить" icon="pi bi-floppy" />
+        <Button
+          :severity="current ? 'info' : 'success'"
+          raised
+          :label="current ? 'Изменить' : 'Отправить'"
+          :icon="current ? 'bi-pencil' : 'bi-floppy'"
+          :disabled="buttonDisabled"
+          @click="submit"
+        />
       </div>
       <span>3 дня до конца периода внесения</span>
     </div>
