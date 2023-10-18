@@ -60,7 +60,7 @@ const chartData = computed(() => {
   const color = documentStyle.getPropertyValue(activeColor.value?.replace('text', '-'))
 
   return ({
-    labels: meterDatas.value.map(data => extractMonth(data.entered_at)),
+    labels: meterDatas.value.map(data => extractMonth(data.enteredAt)),
     datasets: [
       {
         label: 'График потребления',

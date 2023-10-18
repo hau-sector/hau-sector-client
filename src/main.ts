@@ -1,9 +1,11 @@
 import 'moment/dist/locale/ru'
+import { DefaultApolloClient } from '@vue/apollo-composable'
 import moment from 'moment'
 import { createRouter, createWebHistory } from 'vue-router'
-import { createApp } from 'vue'
+import { createApp, provide } from 'vue'
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
+import { apolloClient } from '@/core/constants/apollo-client'
 import { newsRoute } from '@/news/router'
 import { issuesRoute } from '@/issues/router'
 import { chatRoute } from '@/chat/router'
@@ -16,6 +18,8 @@ import { primeVueConfig } from '@/core/constants/prime-vue-config'
 import './index.css'
 
 moment.locale('ru')
+
+provide(DefaultApolloClient, apolloClient)
 
 const app = createApp(App)
 
