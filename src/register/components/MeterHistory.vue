@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { shallowRef } from '@vue/reactivity'
 import { ignorableWatch, syncRefs, whenever } from '@vueuse/core'
+import type { ChartData } from 'chart.js'
 import moment from 'moment'
 import Calendar from 'primevue/calendar'
 import TabMenu from 'primevue/tabmenu'
@@ -9,7 +10,7 @@ import DataTable from 'primevue/datatable'
 import Chart from 'primevue/chart'
 import type { MenuItem } from 'primevue/menuitem'
 import SelectButton from 'primevue/selectbutton'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { capCase } from '../../shared/utils/case'
 import { useMeterDatasStore } from '@/register/stores/meter-datas'
 import TitledComponent from '@/shared/components/TitledComponent.vue'
@@ -27,7 +28,7 @@ const periodOptions: PeriodOption[] = [
 const period = shallowRef<PeriodOption>(periodOptions[0])
 
 const range = ref()
-const { ignoreUpdates: ignoreRangeUpdates } = ignorableWatch(range, () => period.value = undefined)
+const { ignoreUpdates: ignoreRangeUpdates } = ignorableWatch(range, () => period.value = periodOptions[0])
 whenever(
   period,
   ({ value }) => ignoreRangeUpdates(() =>
@@ -43,10 +44,9 @@ const items: (MenuItem & { type: MeterType; color: string; border: string })[] =
 ]
 const active = ref(0)
 const activeType = computed(() => items[active.value]?.type)
-const activeLabel = computed(() => items[active.value]?.label)
 const activeColor = computed(() => items[active.value]?.color)
 
-const { meterDatas, start, end, type } = useMeterDatasStore()
+const { meterDatas, loading, start, end, type } = useMeterDatasStore()
 syncRefs(activeType, type)
 syncRefs(() => range.value[0], start)
 syncRefs(() => range.value[1], end)
@@ -55,23 +55,31 @@ function extractMonth(value: Date) {
   return capCase(moment(value).format('MMMM'))
 }
 
-const chartData = computed(() => {
+const units: Record<MeterType, string> = {
+  [MeterType.ENERGY]: 'кВт•ч',
+  [MeterType.WATER]: 'м³',
+  [MeterType.GAS]: 'м³',
+}
+
+const chartData = shallowRef<ChartData>()
+function updateChartData() {
   const documentStyle = getComputedStyle(document.documentElement)
   const color = documentStyle.getPropertyValue(activeColor.value?.replace('text', '-'))
 
-  return ({
+  chartData.value = {
     labels: meterDatas.value.map(data => extractMonth(data.enteredAt)),
     datasets: [
       {
-        label: 'График потребления',
+        label: `График потребления, ${units[activeType.value]}`,
         borderColor: color,
         data: meterDatas.value.map((data, index, array) => index ? (data.value - array[index - 1].value) : 0),
         tension: 0.4,
         fill: false,
       },
     ],
-  })
-})
+  }
+}
+watch([meterDatas], updateChartData)
 </script>
 
 <template>
@@ -89,13 +97,10 @@ const chartData = computed(() => {
       <DataTable
         scrollable
         scroll-height="flex"
-        sort-field="entered_at"
+        sort-field="enteredAt"
         :sort-order="-1"
+        :loading="loading"
         class="panel h-[40rem] xl:h-[calc(100vh-19rem)]"
-        :pt="{
-          header: { class: 'p-0 border-none' },
-          footer: { class: 'p-0 border-none' },
-        }"
         :value="meterDatas"
       >
         <template #header>
@@ -120,15 +125,15 @@ const chartData = computed(() => {
           <div />
         </template>
 
-        <Column sortable header="Дата" field="entered_at">
+        <Column sortable header="Дата" field="enteredAt">
           <template #body="{ data }">
-            {{ moment(data.entered_at).format('DD.MM.YYYY') }}
+            {{ moment(data.enteredAt).format('DD.MM.YYYY') }}
           </template>
         </Column>
         <Column header="Показание" field="value" />
         <Column header="Период" field="value">
           <template #body="{ data }">
-            {{ extractMonth(data.entered_at) }}
+            {{ extractMonth(data.enteredAt) }}
           </template>
         </Column>
 

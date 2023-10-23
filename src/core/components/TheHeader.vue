@@ -1,30 +1,21 @@
 <script setup lang="ts">
-import { shallowRef } from '@vue/reactivity'
-import Dropdown from 'primevue/dropdown'
 import Toolbar from 'primevue/toolbar'
 import { computed } from 'vue'
-import type { Property } from '@/core/dto/property'
-import { usePropertiesStore } from '@/core/stores/properties'
-import { useUserStore } from '@/core/stores/user'
+import PropertySelect from '@/shared/components/PropertySelect.vue'
+import { useUserStore } from '@/shared/stores/user'
 
 const { user } = useUserStore()
 const name = computed(() => {
-  if (user.value) {
-    const {
-      firstName,
-      lastName,
-      middleName,
-    } = user.value
-    return `${lastName} ${firstName[0]}. ${middleName[0]}.`
-  }
+  if (!user.value)
+    return ''
+
+  const {
+    lastName,
+    firstName: [f],
+    middleName: [m],
+  } = user.value
+  return `${lastName} ${f}. ${m}.`
 })
-
-const { properties } = usePropertiesStore()
-const selectedProperty = shallowRef<Property>()
-
-function parseAddress({ street, house, flat }: Property) {
-  return `ул. ${street}, дом. ${house}, кв. ${flat}`
-}
 </script>
 
 <template>
@@ -33,7 +24,7 @@ function parseAddress({ street, house, flat }: Property) {
   >
     <template #start>
       <div v-if="user" class="flex gap-5 items-center">
-        <img :src="user.avatar" class="w-10 h-10 rounded-lg object-cover object-center">
+        <img :src="user.avatar" alt="avatar" class="w-10 h-10 rounded-lg object-cover object-center">
         <div class="text-lg">
           {{ name }}
         </div>
@@ -41,16 +32,7 @@ function parseAddress({ street, house, flat }: Property) {
     </template>
 
     <template #end>
-      <div class="ml-auto">
-        <Dropdown
-          v-model="selectedProperty"
-          :option-label="parseAddress"
-          :option-value="parseAddress"
-          :options="properties"
-          placeholder="Выберите адрес"
-          class="w-80"
-        />
-      </div>
+      <PropertySelect />
     </template>
   </Toolbar>
 </template>

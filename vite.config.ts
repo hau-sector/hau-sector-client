@@ -1,10 +1,8 @@
 import path from 'node:path'
-import vitePluginMsw from '@iodigital/vite-plugin-msw'
 import Vue from '@vitejs/plugin-vue'
 import { VitePWA } from 'vite-plugin-pwa'
-import { defineConfig } from 'vitest/config'
 import SvgLoader from 'vite-svg-loader'
-import { meterDatasMock } from '@/register/mocks/meter-datas'
+import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   base: './',
@@ -36,10 +34,5 @@ export default defineConfig({
     Vue(),
     VitePWA({ registerType: 'autoUpdate' }),
     SvgLoader(),
-    vitePluginMsw({
-      handlers: [
-        ...meterDatasMock,
-      ],
-    }),
   ],
 })

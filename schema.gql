@@ -1,0 +1,72 @@
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
+type Query {
+  myUser: UserObject!
+  myBuildings: [BuildingObject!]!
+  meterDatas(type: MeterType!, start: String!, end: String!, buildingId: String!): [MeterDataObject!]!
+  currentMeterData(type: MeterType!, buildingId: String!): MeterDataObject
+}
+
+type Mutation {
+  createCurrentMeterData(payload: CreateMeterDataInput): MeterDataObject!
+  updateCurrentMeterData(payload: UpdateMeterDataInput, buildingId: String!): MeterDataObject!
+}
+
+type Subscription {
+  a: String
+}
+
+type UserObject {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  middleName: String!
+  avatar: String!
+}
+
+type BuildingObject {
+  id: ID!
+  street: String!
+  house: String!
+}
+
+type FlatObject {
+  id: ID!
+  flat: Int!
+  buildingId: String!
+  building: BuildingObject!
+}
+
+type MeterDataObject {
+  id: ID!
+  value: Float!
+  accepted: Boolean!
+  enteredAt: String!
+  acceptedAt: String
+  updatedAt: String
+  userId: String!
+  buildingId: String!
+  building: BuildingObject!
+  type: MeterType!
+}
+
+enum MeterType {
+  ENERGY
+  WATER
+  GAS
+}
+
+input CreateMeterDataInput {
+  value: Float!
+  type: MeterType!
+  buildingId: String!
+}
+
+input UpdateMeterDataInput {
+  value: Float!
+  type: MeterType!
+}

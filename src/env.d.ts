@@ -1,5 +1,5 @@
 interface ImportMetaEnv {
-  API_URL: string
+  VITE_API_URL: string
 }
 
 interface ImportMeta {

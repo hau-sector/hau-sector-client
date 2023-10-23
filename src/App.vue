@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { tryOnMounted } from '@vueuse/core'
 import { useRouter } from 'vue-router'
+import { usePropertiesStore } from '@/shared/stores/properties'
 import TheThemeInjector from '@/core/components/TheThemeInjector.vue'
 import TheSideMenu from '@/core/components/TheSideMenu.vue'
 import TheHeader from '@/core/components/TheHeader.vue'
@@ -14,14 +15,17 @@ async function preload() {
     .map(fn => (fn as Function)()))
 }
 tryOnMounted(preload)
+
+const { selectedId } = usePropertiesStore()
 </script>
 
 <template>
   <TheThemeInjector />
 
   <div class="w-full h-full bg-ground flex flex-col px-3 2xl:px-5">
-    <TheHeader class="mb-3 2xl:mb-5" />
-    <div class="flex flex-1 gap-1 mb-3 2xl:mb-5 2xl:gap-4">
+    <TheHeader class="mb-3 shrink-0 2xl:mb-5" />
+
+    <div v-if="selectedId" class="flex flex-1 gap-1 mb-3 2xl:mb-5 2xl:gap-4">
       <TheSideMenu />
 
       <RouterView v-slot="{ Component }">
@@ -35,6 +39,10 @@ tryOnMounted(preload)
           <component :is="Component" class="flex-1 px-2 h-[calc(100vh-6rem)]  2xl:h-[calc(100vh-7rem)] overflow-auto" />
         </transition>
       </RouterView>
+    </div>
+
+    <div v-else class="m-auto flex flex-col gap-5">
+      <span class="text-xl">Для начала работы выберете объект собственности</span>
     </div>
   </div>
 </template>

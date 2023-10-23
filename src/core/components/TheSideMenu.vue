@@ -3,7 +3,7 @@ import Menu from 'primevue/menu'
 import InputSwitch from 'primevue/inputswitch'
 import type { MenuItem } from 'primevue/menuitem'
 import type { RouteLocationRaw } from 'vue-router'
-import { useSettingsStore } from '@/core/stores/settings'
+import { useSettingsStore } from '@/shared/stores/settings'
 import { RouteName } from '@/shared/constants/route-name'
 
 const items: (MenuItem & { route: RouteLocationRaw; color: string })[] = [

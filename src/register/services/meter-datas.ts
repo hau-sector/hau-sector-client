@@ -1,8 +1,8 @@
-import { faker } from '@faker-js/faker'
-import { useQuery } from '@vue/apollo-composable'
+import { useMutation, useQuery } from '@vue/apollo-composable'
 import { createGlobalState } from '@vueuse/core'
 import gql from 'graphql-tag'
-import moment from 'moment'
+import { toValue } from 'vue'
+import type { MaybeRefOrGetter } from 'vue'
 import { METER_DATA } from '@/register/dto/meter-data'
 import type { UpdateMeterData } from '@/register/dto/update-meter-data'
 import type { CreateMeterData } from '@/register/dto/create-meter-data'
@@ -10,80 +10,79 @@ import type { MeterType } from '@/register/constants/meter-type'
 import type { MeterData } from '@/register/dto/meter-data'
 
 export const useMeterDatasService = createGlobalState(() => ({
-  meterDatas: () => useQuery<
+  getMeterDatas: (
+    type: MaybeRefOrGetter<MeterType | undefined>,
+    start: MaybeRefOrGetter<Date | undefined>,
+    end: MaybeRefOrGetter<Date | undefined>,
+    buildingId: MaybeRefOrGetter<string | undefined>,
+  ) => useQuery<
     { meterDatas: MeterData[] },
-    { type?: MeterType; start?: Date; end?: Date }
+    { type: MeterType | undefined; start: Date | undefined; end: Date | undefined; buildingId: string | undefined }
   >(gql`
-      query GetMeterDatas {
-        meterDatas {
+      query GetMeterDatas($type: MeterType!, $start: String!, $end: String!, $buildingId: String!) {
+        meterDatas(type: $type, start: $start, end: $end, buildingId: $buildingId) {
           ...MeterData
         }
       }
       ${METER_DATA}
     `,
-  {
-    type: undefined,
-    start: undefined,
-    end: undefined,
+  () => ({
+    type: toValue(type),
+    start: toValue(start),
+    end: toValue(end),
+    buildingId: toValue(buildingId),
   }),
+  () => ({
+    enabled: Boolean(toValue(type) && toValue(start) && toValue(end) && toValue(buildingId)),
+  })),
 
-  async getAll(type: MeterType, start: Date, end: Date): Promise<MeterData[]> {
-    return Array.from(
-      { length: moment(end).diff(start, 'months') },
-      (_, i) => ({
-        id: faker.string.uuid(),
-        value: 10_000 + i * 220 + faker.number.float({
-          max: 100,
-          precision: 0.001,
-        }),
-        accepted: true,
-        enteredAt: moment(start).add(i, 'months').toDate(),
-        acceptedAt: moment(start).add(i, 'months').toDate(),
-        userId: 'uuu',
-        type,
-      }),
-    )
-  },
-
-  async getCurrent(type: MeterType): Promise<MeterData | undefined> {
-    const entered = faker.datatype.boolean()
-
-    return entered
-      ? {
-          id: faker.string.uuid(),
-          value: 10_000 + faker.number.float({
-            max: 1000,
-            precision: 0.001,
-          }),
-          accepted: true,
-          enteredAt: new Date(),
-          acceptedAt: new Date(),
-          userId: 'uuu',
-          type,
+  getCurrentMeterData: (
+    type: MaybeRefOrGetter<MeterType | undefined>,
+    buildingId: MaybeRefOrGetter<string | undefined>,
+  ) => useQuery<
+    { currentMeterData: MeterData | undefined },
+    { type: MeterType | undefined; buildingId: string | undefined }
+  >(gql`
+      query GetCurrentMeterData($type: MeterType!, $buildingId: String!) {
+        currentMeterData(type: $type, buildingId: $buildingId) {
+          ...MeterData
         }
-      : undefined
-  },
+      }
+      ${METER_DATA}
+    `,
+  () => ({
+    type: toValue(type),
+    buildingId: toValue(buildingId),
+  }),
+  () => ({
+    enabled: Boolean(toValue(type) && toValue(buildingId)),
+  })),
 
-  async createCurrent(payload: CreateMeterData) {
-    return {
-      ...payload,
-      id: faker.string.uuid(),
-      accepted: true,
-      entered_at: new Date(),
-      accepted_at: new Date(),
-      user_id: 'uuu',
-    }
-  },
+  createCurrentMeterData: () => useMutation<
+    { createCurrentMeterData: MeterData },
+    { payload: CreateMeterData }
+  >(
+    gql`
+        mutation CreateCurrentMeterData($payload: CreateMeterDataInput!) {
+          createCurrentMeterData(payload: $payload) {
+            ...MeterData
+          }
+        }
+        ${METER_DATA}
+    `,
+  ),
 
-  async updateCurrent(type: MeterType, payload: UpdateMeterData) {
-    return {
-      ...payload,
-      id: faker.string.uuid(),
-      accepted: true,
-      entered_at: new Date(),
-      accepted_at: new Date(),
-      user_id: 'uuu',
-      type,
-    }
-  },
+  updateCurrentMeterData: () => useMutation<
+    { updateCurrentMeterData: MeterData },
+    { payload: UpdateMeterData; buildingId: string }
+  >(
+    gql`
+        mutation UpdateCurrentMeterData($payload: UpdateMeterDataInput!, $buildingId: String!) {
+          updateCurrentMeterData(payload: $payload, buildingId: $buildingId) {
+            ...MeterData
+          }
+        }
+        ${METER_DATA}
+    `,
+  ),
 }))

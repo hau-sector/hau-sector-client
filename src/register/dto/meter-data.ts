@@ -5,11 +5,12 @@ export interface MeterData {
   id: string
   value: number
   accepted: boolean
-  enteredAt?: Date
+  enteredAt: Date
   acceptedAt?: Date
   updatedAt?: Date
-  userId: string
   type: MeterType
+  userId: string
+  __typename: 'MeterDataObject'
 }
 
 export const METER_DATA = gql`
@@ -17,10 +18,10 @@ export const METER_DATA = gql`
       id
       value
       accepted
-      entered_at
-      accepted_at
-      updated_at
-      user_id
+      enteredAt
+      acceptedAt
+      updatedAt
+      userId
       type
     }
 `

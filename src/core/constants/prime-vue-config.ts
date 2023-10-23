@@ -28,4 +28,11 @@ export const primeVueConfig: PrimeVueConfiguration = {
       new Date(0, 0, 1 + i).toLocaleString('ru-RU', { weekday: 'short' }),
     ),
   },
+  pt: {
+    datatable: {
+      header: { class: 'p-0 border-none' },
+      footer: { class: 'p-0 border-none' },
+      loadingOverlay: { class: 'bg-transparent backdrop-blur' },
+    },
+  },
 }

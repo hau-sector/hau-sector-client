@@ -2,7 +2,7 @@
 import { useTimeoutFn } from '@vueuse/core'
 import DarkTheme from 'primevue/resources/themes/soho-dark/theme.css?url'
 import { ref, toRefs, watch } from 'vue'
-import { useSettingsStore } from '@/core/stores/settings'
+import { useSettingsStore } from '@/shared/stores/settings'
 
 const props = withDefaults(
   defineProps<{
