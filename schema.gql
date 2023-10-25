@@ -10,11 +10,13 @@ type Query {
   meterDatas(type: MeterType!, start: String!, end: String!, buildingId: String!): [MeterDataObject!]!
   currentMeterData(type: MeterType!, buildingId: String!): MeterDataObject
   news(buildingId: String!): [NewsObject!]!
+  issues(buildingId: String!): [IssueObject!]!
 }
 
 type Mutation {
-  createCurrentMeterData(payload: CreateMeterDataInput): MeterDataObject!
+  createCurrentMeterData(payload: CreateMeterDataInput, buildingId: String!): MeterDataObject!
   updateCurrentMeterData(payload: UpdateMeterDataInput, buildingId: String!): MeterDataObject!
+  createIssue(payload: CreateIssueInput, buildingId: String!): IssueObject!
 }
 
 type Subscription {
@@ -63,19 +65,37 @@ type NewsObject {
   publishedAt: String!
 }
 
+type IssueObject {
+  id: ID!
+  title: String!
+  content: String!
+  status: IssueStatus!
+  createdAt: String!
+}
+
 enum MeterType {
   ENERGY
   WATER
   GAS
 }
 
+enum IssueStatus {
+  DONE
+  PROGRESS
+  SENT
+}
+
 input CreateMeterDataInput {
   value: Float!
   type: MeterType!
-  buildingId: String!
 }
 
 input UpdateMeterDataInput {
   value: Float!
   type: MeterType!
+}
+
+input CreateIssueInput {
+  title: String!
+  content: String!
 }

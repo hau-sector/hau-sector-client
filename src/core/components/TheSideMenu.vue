@@ -33,7 +33,7 @@ const { dark } = useSettingsStore()
       <router-link v-slot="{ href, isActive, navigate }" :to="item.route" custom>
         <a
           :href="href"
-          :class="isActive && 'bg-hover'"
+          :class="{ 'bg-hover': isActive }"
           class="flex items-center gap-5 px-7 py-3 transition"
           v-bind="props.action"
           @click="navigate"

@@ -114,11 +114,11 @@ watch([meterDatas], updateChartData)
             <template #item="{ item, props }">
               <div
                 class="flex justify-center items-center gap-5 w-52 py-3 cursor-pointer transition"
-                :class="item.type === activeType && item.border"
+                :class="{ [item.border]: item.type === activeType }"
                 v-bind="props.action"
               >
                 <i class="text-xl m-0" :class="item.color" v-bind="props.icon" />
-                <span v-bind="props.label" class="transition" :class="item.type === activeType && item.color">{{ item.label }}</span>
+                <span v-bind="props.label" class="transition" :class="{ [item.color]: item.type === activeType }">{{ item.label }}</span>
               </div>
             </template>
           </TabMenu>

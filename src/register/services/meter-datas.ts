@@ -60,11 +60,11 @@ export const useMeterDatasService = createGlobalState(() => ({
 
   createCurrentMeterData: () => useMutation<
     { createCurrentMeterData: MeterData },
-    { payload: CreateMeterData }
+    { payload: CreateMeterData; buildingId: string }
   >(
     gql`
-        mutation CreateCurrentMeterData($payload: CreateMeterDataInput!) {
-          createCurrentMeterData(payload: $payload) {
+        mutation CreateCurrentMeterData($payload: CreateMeterDataInput!, $buildingId: String!) {
+          createCurrentMeterData(payload: $payload, buildingId: $buildingId) {
             ...MeterData
           }
         }

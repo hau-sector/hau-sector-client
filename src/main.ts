@@ -24,6 +24,7 @@ if (import.meta.env.DEV) {
   const { meterDatasMock } = await import('@/register/mocks/meter-datas')
   const { userMock } = await import('@/shared/mocks/user')
   const { newsMock } = await import('@/news/mocks/news')
+  const { issuesMock } = await import('@/issues/mocks/issues')
   const { buildingsMock } = await import('@/shared/mocks/buildings')
 
   const worker = setupWorker(
@@ -31,6 +32,7 @@ if (import.meta.env.DEV) {
     ...buildingsMock,
     ...userMock,
     ...newsMock,
+    ...issuesMock,
   )
   await worker.start({ onUnhandledRequest: 'bypass' })
 }

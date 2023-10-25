@@ -6,7 +6,7 @@ const { news } = useNewsStore()
 </script>
 
 <template>
-  <div class="grid grid-cols-1 2xl:grid-cols-2 gap-3">
-    <NewsCard v-for="item of news" :key="item.id" :news="item" />
+  <div class="grid grid-cols-1 2xl:grid-cols-2 gap-5">
+    <NewsCard v-for="item of news" :key="item.id" :news="item" class="h-[min-content]" />
   </div>
 </template>

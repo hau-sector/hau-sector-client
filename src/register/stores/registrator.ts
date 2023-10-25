@@ -24,7 +24,8 @@ export const useRegistratorStore = createGlobalState(() => {
   async function sendData(type: MeterType, value: number) {
     if (selectedId.value) {
       const result = await createMutate({
-        payload: { type, value, buildingId: selectedId.value },
+        payload: { type, value },
+        buildingId: selectedId.value,
       })
       if (result?.data)
         currentData.value[type] = result.data.createCurrentMeterData
