@@ -13,7 +13,7 @@ const date = computed(() => moment(news.value.publishedAt).format('DD MMMM'))
 </script>
 
 <template>
-  <div class="panel h-[max-content] p-5 flex gap-5 relative overflow-hidden">
+  <div class="panel h-[min-content] p-5 flex gap-5 relative overflow-hidden">
     <img :src="news.image" alt="photo" class="z-0 absolute w-full h-full scale-125 object-cover object-center rounded-theme blur-xl opacity-20 pointer-events-none">
 
     <div class="w-6/12 z-10 shadow-xl rounded-xl overflow-hidden">
