@@ -10,7 +10,7 @@ function parseAddress(property?: Property) {
     return ''
 
   const { building: { street, house }, flat } = property
-  return `${street}, д. ${house}, кв. ${flat}`
+  return `ул. ${street}, д. ${house}, кв. ${flat}`
 }
 </script>
 

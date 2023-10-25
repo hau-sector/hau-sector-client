@@ -14,7 +14,7 @@ export const buildingsMock = [
         id: faker.database.mongodbObjectId(),
         flat: faker.number.int({ min: 1, max: 100 }),
         building: {
-          street: faker.location.street(),
+          street: faker.location.streetName(),
           house: faker.number.int({ min: 1, max: 100 }).toString(),
           __typename: 'BuildingObject',
         },

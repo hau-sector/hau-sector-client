@@ -9,6 +9,7 @@ type Query {
   myBuildings: [BuildingObject!]!
   meterDatas(type: MeterType!, start: String!, end: String!, buildingId: String!): [MeterDataObject!]!
   currentMeterData(type: MeterType!, buildingId: String!): MeterDataObject
+  news(buildingId: String!): [NewsObject!]!
 }
 
 type Mutation {
@@ -52,6 +53,14 @@ type MeterDataObject {
   buildingId: String!
   building: BuildingObject!
   type: MeterType!
+}
+
+type NewsObject {
+  id: ID!
+  title: String!
+  content: String!
+  image: String!
+  publishedAt: String!
 }
 
 enum MeterType {

@@ -5,9 +5,9 @@ export interface MeterData {
   id: string
   value: number
   accepted: boolean
-  enteredAt: Date
-  acceptedAt?: Date
-  updatedAt?: Date
+  enteredAt: string
+  acceptedAt?: string
+  updatedAt?: string
   type: MeterType
   userId: string
   __typename: 'MeterDataObject'
