@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Toolbar from 'primevue/toolbar'
 import { computed } from 'vue'
+import { useSideMenuStore } from '@/core/stores'
 import PropertySelect from '@/shared/components/PropertySelect.vue'
 import { useUserStore } from '@/shared/stores/user'
 
@@ -16,6 +17,8 @@ const name = computed(() => {
   } = user.value
   return `${lastName} ${f}. ${m}.`
 })
+
+const { hidden } = useSideMenuStore()
 </script>
 
 <template>

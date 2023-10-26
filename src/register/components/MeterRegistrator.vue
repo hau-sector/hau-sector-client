@@ -5,6 +5,7 @@ import { syncRefs, tryOnMounted, tryOnUnmounted } from '@vueuse/core'
 import moment from 'moment'
 import { computed, ref } from 'vue'
 import InputNumber from 'primevue/inputnumber'
+import type { ButtonProps } from 'primevue/button'
 import Button from 'primevue/button'
 import { DayLimit } from '@/register/constants/day-limit'
 import { useRegistratorStore } from '@/register/stores/registrator'
@@ -78,9 +79,9 @@ const buttonDisabled = computed(() =>
   || (Boolean(current.value) && value.value === currentValue.value)
   || inputReached,
 )
-const buttonSeverity = computed(() => {
+const buttonSeverity = computed<ButtonProps['severity']>(() => {
   if (inputReached)
-    return 'danger'
+    return 'secondary'
   else if (current.value)
     return 'info'
   else
@@ -120,16 +121,14 @@ function submit() {
       </span>
     </div>
 
-    <div class="px-10 pt-10 pb-5 flex flex-col flex-1 gap-4 justify-center">
+    <div class="px-10 py-5 eflex flex-col flex-1 gap-4 justify-center">
       <div class="flex gap-5">
-        <span class="p-float-label flex-1">
+        <span class="p-float-label flex-1 mt-5">
           <InputNumber
             id="number-input"
             v-model="$v.meter.$model"
             class="w-full"
-            :class="{
-              'p-invalid': $v.meter.$dirty && $v.meter.$invalid,
-            }"
+            :class="{ 'p-invalid': $v.meter.$dirty && $v.meter.$invalid }"
             :disabled="inputReached"
             :min-fraction-digits="2"
             :max-fraction-digits="3"

@@ -23,7 +23,7 @@ export const useIssuesStore = createGlobalState(() => {
       })
 
       if (result?.data)
-        issues.value = [...issues.value, result.data.issue]
+        issues.value = [result.data.createIssue, ...issues.value]
     }
   }
 

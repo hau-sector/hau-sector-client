@@ -2,9 +2,13 @@
 import Menu from 'primevue/menu'
 import InputSwitch from 'primevue/inputswitch'
 import type { MenuItem } from 'primevue/menuitem'
+import Toolbar from 'primevue/toolbar'
 import type { RouteLocationRaw } from 'vue-router'
+import { computed } from 'vue/dist/vue'
 import { useSettingsStore } from '@/shared/stores/settings'
 import { RouteName } from '@/shared/constants/route-name'
+import { useUserStore } from '@/shared/stores/user'
+import PropertySelect from '@/shared/components/PropertySelect.vue'
 
 const items: (MenuItem & { route: RouteLocationRaw; color: string })[] = [
   { label: 'Главная', icon: 'pi bi-house', route: { name: RouteName.HOME }, color: 'text-cyan-600' },
@@ -17,6 +21,19 @@ const items: (MenuItem & { route: RouteLocationRaw; color: string })[] = [
 ]
 
 const { dark } = useSettingsStore()
+
+const { user } = useUserStore()
+const name = computed(() => {
+  if (!user.value)
+    return ''
+
+  const {
+    lastName,
+    firstName: [f],
+    middleName: [m],
+  } = user.value
+  return `${lastName} ${f}. ${m}.`
+})
 </script>`
 
 <template>
@@ -54,6 +71,27 @@ const { dark } = useSettingsStore()
           <span>Темная тема</span></label>
         <InputSwitch v-model="dark" input-id="dark-theme-switch" />
       </div>
+
+      <Toolbar
+        class="panel rounded-t-none border-t-0 py-3"
+      >
+        <template #start>
+          <div v-if="user" class="flex gap-5 items-center">
+            <img :src="user.avatar" alt="avatar" class="w-10 h-10 rounded-lg object-cover object-center">
+            <div class="text-lg">
+              {{ name }}
+            </div>
+          </div>
+        </template>
+
+        <template #end>
+          <div class="flex gap-5">
+            <PropertySelect />
+
+            <Button icon="list" />
+          </div>
+        </template>
+      </Toolbar>
     </template>
   </Menu>
 </template>

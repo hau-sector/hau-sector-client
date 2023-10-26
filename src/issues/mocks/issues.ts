@@ -34,7 +34,7 @@ export const issuesMock = [
       const createIssue: Issue = {
         ...payload,
         id: faker.database.mongodbObjectId(),
-        status: faker.helpers.enumValue(IssueStatus),
+        status: IssueStatus.SENT,
         createdAt: faker.date.recent({ days: 30 }).toISOString(),
         __typename: 'IssueObject',
       }

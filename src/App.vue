@@ -42,7 +42,7 @@ const { selectedId } = usePropertiesStore()
     </div>
 
     <div v-else class="m-auto flex flex-col gap-5">
-      <span class="text-xl">Для начала работы выберете объект собственности</span>
+      <span class="text-xl">Для начала работы выберите объект собственности</span>
     </div>
   </div>
 </template>

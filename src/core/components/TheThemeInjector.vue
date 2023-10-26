@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTimeoutFn } from '@vueuse/core'
-import DarkTheme from 'primevue/resources/themes/soho-dark/theme.css?url'
+import DarkTheme from 'primevue/resources/themes/viva-dark/theme.css?url'
 import { ref, toRefs, watch } from 'vue'
 import { useSettingsStore } from '@/shared/stores/settings'
 

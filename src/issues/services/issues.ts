@@ -29,7 +29,7 @@ export const useIssueService = createGlobalState(() => ({
   })),
 
   createIssue: () => useMutation<
-      { issue: Issue },
+      { createIssue: Issue },
       { payload: CreateIssue; buildingId: string }
   >(gql`
       mutation CreateIssue($payload: CreateIssueInput!, $buildingId: String!) {

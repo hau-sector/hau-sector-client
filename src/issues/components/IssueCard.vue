@@ -13,9 +13,9 @@ const issue = toRef(props, 'issue')
 const date = computed(() => moment(issue.value.createdAt).format('DD MMMM'))
 
 const metas: Record<IssueStatus, { label: string; bgColor: string; textColor: string }> = {
-  [IssueStatus.SENT]: { label: 'Принято', bgColor: 'before:from-sky-200', textColor: 'text-sky-500' },
-  [IssueStatus.PROGRESS]: { label: 'Обрабатывается', bgColor: 'before:from-amber-200', textColor: 'text-amber-500' },
-  [IssueStatus.DONE]: { label: 'Завершено', bgColor: 'before:from-lime-200', textColor: 'text-lime-500' },
+  [IssueStatus.SENT]: { label: 'Принято', bgColor: 'before:from-sky-500', textColor: 'text-sky-500' },
+  [IssueStatus.PROGRESS]: { label: 'Обрабатывается', bgColor: 'before:from-amber-500', textColor: 'text-amber-500' },
+  [IssueStatus.DONE]: { label: 'Завершено', bgColor: 'before:from-emerald-500', textColor: 'text-emerald-500' },
 }
 const meta = computed(() => metas[props.issue.status])
 </script>
@@ -24,15 +24,14 @@ const meta = computed(() => metas[props.issue.status])
   <div
     class="
   panel px-10 py-6 flex flex-col gap-5 overflow-hidden relative
-  before:content-[''] before:z-0  before:absolute before:inset-0 before:bg-gradient-to-tr before:via-transparent before:origin-bottom-left before:scale-75
-"
+  before:content-[''] before:z-0  before:absolute before:inset-0 before:bg-gradient-to-tr before:via-transparent before:origin-bottom-left before:scale-75 before:opacity-30"
     :class="[meta.bgColor]"
   >
     <span class="text-xl font-bold z-10">{{ issue.title }}</span>
     <span class="mb-3 z-10">{{ issue.content }}</span>
 
     <div class="flex z-10">
-      <span class="font-bold drop-shadow-md" :class="[meta.textColor]">{{ meta.label }}</span>
+      <span class="drop-shadow-md text-lg" :class="[meta.textColor]">{{ meta.label }}</span>
 
       <span class="ml-auto text-gray-500">{{ date }}</span>
     </div>
