@@ -24,7 +24,7 @@ const date = computed(() => moment(news.value.publishedAt).format('DD MMMM'))
       <span class="text-xl font-bold">{{ news.title }}</span>
       <span class="mb-3">{{ news.content }}</span>
 
-      <span class="ml-auto text-gray-500">{{ date }}</span>
+      <span class="ml-auto mt-auto text-gray-500">{{ date }}</span>
     </div>
   </div>
 </template>

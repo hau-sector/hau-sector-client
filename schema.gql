@@ -11,12 +11,17 @@ type Query {
   currentMeterData(type: MeterType!, buildingId: String!): MeterDataObject
   news(buildingId: String!): [NewsObject!]!
   issues(buildingId: String!): [IssueObject!]!
+  votes(buildingId: String!): [VoteObject!]!
+  paymentDatas(paid: Boolean, start: String, end: String, buildingId: String!): [PaymentDataObject!]!
+  contacts(buildingId: String!): [ContactObject!]!
+  messages(buildingId: String!): [MessageObject!]!
 }
 
 type Mutation {
   createCurrentMeterData(payload: CreateMeterDataInput, buildingId: String!): MeterDataObject!
   updateCurrentMeterData(payload: UpdateMeterDataInput, buildingId: String!): MeterDataObject!
   createIssue(payload: CreateIssueInput, buildingId: String!): IssueObject!
+  createMessage(payload: CreateMessageInput, buildingId: String!): MessageObject!
 }
 
 type Subscription {
@@ -73,6 +78,59 @@ type IssueObject {
   createdAt: String!
 }
 
+type VoteObject {
+  id: ID!
+  title: String!
+  content: String!
+  status: VoteStatus!
+  publishedAt: String!
+  answer: VoteAnswer
+}
+
+type ContactObject {
+  id: ID!
+  name: String!
+  surname: String!
+  avatar: String!
+  online: Boolean!
+  flat: Int!
+}
+
+type MessageObject {
+  id: ID!
+  text: String!
+  mine: Boolean!
+  sender: ContactObject!
+}
+
+enum VoteAnswer {
+  AGREE
+  DISAGREE
+  AVOID
+}
+
+enum VoteStatus {
+  NEW
+  COMPLETED
+}
+
+type VoteResultObject {
+  id: ID!
+  agree: String
+  disagree: String
+  avoid: String
+}
+
+type PaymentDataObject {
+  id: ID!
+  value: Int!
+  paid: Boolean!
+  paidAt: String!
+  userId: String!
+  buildingId: String!
+  building: BuildingObject!
+}
+
 enum MeterType {
   ENERGY
   WATER
@@ -98,4 +156,8 @@ input UpdateMeterDataInput {
 input CreateIssueInput {
   title: String!
   content: String!
+}
+
+input CreateMessageInput {
+  text: String!
 }

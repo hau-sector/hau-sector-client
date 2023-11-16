@@ -1,0 +1,12 @@
+[build]
+command = "yarn build:mock"
+functions = "netlify/functions"
+publish = "dist"
+
+[build.environment]
+YARN_VERSION = "1.17.3"
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200

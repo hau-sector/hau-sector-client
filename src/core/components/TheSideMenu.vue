@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import Menu from 'primevue/menu'
 import InputSwitch from 'primevue/inputswitch'
 import type { MenuItem } from 'primevue/menuitem'
@@ -17,16 +18,19 @@ const items: (MenuItem & { route: RouteLocationRaw; color: string })[] = [
 ]
 
 const { dark } = useSettingsStore()
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const collapsed = breakpoints.smaller('xl')
 </script>`
 
 <template>
   <Menu
     :model="items"
     :pt="{
-      root: { class: 'panel min-w-max py-4 flex flex-col' },
+      root: { class: `panel min-w-max py-4 flex flex-col ${collapsed && 'w-min px-0'}` },
       menu: { class: 'min-w-max' },
       menuitem: { class: 'my-3' },
-      content: { class: 'overflow-hidden' },
+      content: { class: `overflow-hidden  ${collapsed && 'rounded-none'}` },
       end: { class: 'mt-auto' },
     }"
   >
@@ -40,7 +44,7 @@ const { dark } = useSettingsStore()
           @click="navigate"
         >
           <i class="text-xl m-0" :class="[item.color]" v-bind="props.icon" />
-          <span class="text-lg whitespace-nowrap transition" :class="{ [item.color]: isActive }" v-bind="props.label">
+          <span v-show="!collapsed" class="text-lg whitespace-nowrap transition" :class="{ [item.color]: isActive }" v-bind="props.label">
             {{ item.label }}
           </span>
         </a>
@@ -48,10 +52,10 @@ const { dark } = useSettingsStore()
     </template>
 
     <template #end>
-      <div class="flex gap-5 justify-center">
+      <div class="flex gap-5 items-center justify-center" :class="{ 'flex-col gap-3': collapsed }">
         <label class="flex gap-3" for="dark-theme-switch">
           <i class="pi bi-lamp text-xl" />
-          <span>Темная тема</span></label>
+          <span v-show="!collapsed">Темная тема</span></label>
         <InputSwitch v-model="dark" input-id="dark-theme-switch" />
       </div>
     </template>

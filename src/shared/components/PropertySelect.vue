@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import Dropdown from 'primevue/dropdown'
+import { watch } from 'vue'
 import type { Property } from '@/shared/dto/property'
 import { usePropertiesStore } from '@/shared/stores/properties'
 
 const { properties, selectedId, loading } = usePropertiesStore()
 
+// TODO: Удалить!
+watch(properties, () => selectedId.value = properties.value[0].id)
 function parseAddress(property?: Property) {
   if (!property)
     return ''

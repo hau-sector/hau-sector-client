@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import VueSvg from '@/home/assets/vue.svg'
+import VotesList from '@/votes/components/VotesList.vue'
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col gap-10 xl:flex-row">
+    <VotesList class="flex-1" />
   </div>
 </template>

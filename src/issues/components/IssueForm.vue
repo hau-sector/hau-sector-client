@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import useVuelidate from '@vuelidate/core/dist/index'
+import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
 import Button from 'primevue/button'
 import { reactive } from 'vue'
+import TitledComponent from '@/shared/components/TitledComponent.vue'
 import { useIssuesStore } from '@/issues/stores/issues'
 
 const state = reactive({
@@ -30,24 +31,27 @@ async function submit() {
 
 <template>
   <div class="panel p-3 flex flex-col gap-3">
-    <span class="p-float-label mt-5">
-      <InputText
-        v-model="$v.title.$model"
-        class="w-full"
-        :class="{ 'p-invalid': $v.title.$dirty && $v.title.$invalid }"
-      />
-      <label>Проблема</label>
-    </span>
+    <TitledComponent mini title="Новая заявка" icon="pi bi-building-add">
+      <span class="p-float-label mt-5">
+        <InputText
+          v-model="$v.title.$model"
+          class="w-full"
+          :class="{ 'p-invalid': $v.title.$dirty && $v.title.$invalid }"
+        />
+        <label>Заголовок</label>
+      </span>
 
-    <span class="p-float-label mt-5">
-      <Textarea
-        v-model="$v.content.$model"
-        class="w-full resize-y"
-        :class="{ 'p-invalid': $v.content.$dirty && $v.content.$invalid }"
-      />
-      <label>Описание</label>
-    </span>
+      <span class="p-float-label mt-5">
+        <Textarea
+          v-model="$v.content.$model"
+          auto-resize
+          class="w-full resize-y"
+          :class="{ 'p-invalid': $v.content.$dirty && $v.content.$invalid }"
+        />
+        <label>Описание</label>
+      </span>
 
-    <Button severity="success" :disabled="$v.$invalid" icon="bi-send" label="Отправить" @click="submit" />
+      <Button severity="success" class="mx-auto flex flex-row-reverse gap-2" :disabled="$v.$invalid" icon="bi-send" label="Отправить" @click="submit" />
+    </TitledComponent>
   </div>
 </template>

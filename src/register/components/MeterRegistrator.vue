@@ -13,6 +13,7 @@ import { MeterType } from '@/register/constants/meter-type'
 
 const props = defineProps<{
   type: MeterType
+  mini: boolean
 }>()
 
 const metas: Record<MeterType, { label: string; icon: string; color: string }> = {
@@ -102,7 +103,7 @@ function submit() {
 </script>
 
 <template>
-  <div class="panel flex">
+  <div class="panel flex min-h-[6rem]">
     <div
       class="w-40 pr-3 flex flex-col items-center justify-center gap-2 overflow-hidden relative
       before:content-[''] before:z-0 before:absolute before:-inset-10
@@ -121,8 +122,8 @@ function submit() {
       </span>
     </div>
 
-    <div class="px-10 py-5 eflex flex-col flex-1 gap-4 justify-center">
-      <div class="flex gap-5">
+    <div class="px-10 py-5 flex flex-col flex-1 gap-4 justify-center">
+      <div v-if="!mini" class="flex gap-5 items-baseline">
         <span class="p-float-label flex-1 mt-5">
           <InputNumber
             id="number-input"
@@ -135,13 +136,13 @@ function submit() {
             @keyup.enter="submit"
             @input="value = $event.value"
           />
-          <label for="number-input">Показание</label>
+          <label v-if="!mini" for="number-input">Показание</label>
         </span>
         <Button
           :severity="buttonSeverity"
           raised
-          :label="current ? 'Изменить' : 'Отправить'"
-          :icon="current ? 'bi-pencil' : 'bi-floppy'"
+          :label="currentValue ? 'Изменить' : 'Отправить'"
+          :icon="currentValue ? 'bi-pencil' : 'bi-floppy'"
           :disabled="buttonDisabled"
           @click="submit"
         />

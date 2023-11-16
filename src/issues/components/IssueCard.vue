@@ -30,7 +30,7 @@ const meta = computed(() => metas[props.issue.status])
     <span class="text-xl font-bold z-10">{{ issue.title }}</span>
     <span class="mb-3 z-10">{{ issue.content }}</span>
 
-    <div class="flex z-10">
+    <div class="flex z-10 mt-auto">
       <span class="drop-shadow-md text-lg" :class="[meta.textColor]">{{ meta.label }}</span>
 
       <span class="ml-auto text-gray-500">{{ date }}</span>

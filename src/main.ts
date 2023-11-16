@@ -19,22 +19,32 @@ import './index.css'
 
 moment.locale('ru')
 
-if (import.meta.env.DEV) {
-  const { setupWorker } = await import('msw')
-  const { meterDatasMock } = await import('@/register/mocks/meter-datas')
-  const { userMock } = await import('@/shared/mocks/user')
-  const { newsMock } = await import('@/news/mocks/news')
-  const { issuesMock } = await import('@/issues/mocks/issues')
-  const { buildingsMock } = await import('@/shared/mocks/buildings')
+async function mock() {
+  if (import.meta.env.DEV) {
+    const { setupWorker } = await import('msw')
+    const { meterDatasMock } = await import('@/register/mocks/meter-datas')
+    const { paymentDatasMock } = await import('@/payments/mocks/payment-datas')
+    const { userMock } = await import('@/shared/mocks/user')
+    const { newsMock } = await import('@/news/mocks/news')
+    const { votesMock } = await import('@/votes/mocks/votes')
+    const { issuesMock } = await import('@/issues/mocks/issues')
+    const { buildingsMock } = await import('@/shared/mocks/buildings')
+    const { contactsMock } = await import('@/chat/mocks/contacts')
+    const { messagesMock } = await import('@/chat/mocks/messages')
 
-  const worker = setupWorker(
-    ...meterDatasMock,
-    ...buildingsMock,
-    ...userMock,
-    ...newsMock,
-    ...issuesMock,
-  )
-  await worker.start({ onUnhandledRequest: 'bypass' })
+    const worker = setupWorker(
+      ...meterDatasMock,
+      ...paymentDatasMock,
+      ...buildingsMock,
+      ...userMock,
+      ...newsMock,
+      ...votesMock,
+      ...issuesMock,
+      ...contactsMock,
+      ...messagesMock,
+    )
+    await worker.start({ serviceWorker: { url: `${location.origin}/mockServiceWorker.js` }, onUnhandledRequest: 'bypass' })
+  }
 }
 
 provideApolloClient(apolloClient)
@@ -59,4 +69,8 @@ app
   .use(PrimeVue, primeVueConfig)
   .use(ToastService)
 
-app.mount('#app')
+async function bootstrap() {
+  await mock()
+  app.mount('#app')
+}
+void bootstrap()
