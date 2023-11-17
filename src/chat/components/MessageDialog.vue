@@ -13,7 +13,17 @@ const time = computed(() => `${moment(props.message.time).hour()}:${moment(props
 
 <template>
   <div class="flex items-end gap-4" :class="props.message.mine ? 'ml-auto' : 'mr-auto'">
-    <img v-if="!props.message.mine" :src="props.message.sender.avatar" class="w-8 rounded-full shadow-md">
+    <div class="flex items-end mr-2 relative">
+      <img
+        v-if="!props.message.mine" :src="props.message.sender.avatar"
+        class="w-8 rounded-full shadow-md"
+      >
+      <i
+        v-if="!props.message.mine"
+        class="pi bi-circle-fill text-xs absolute left-7 top-5 drop-shadow-md"
+        :class="props.message.sender.online ? 'text-emerald-400' : 'text-rose-500'"
+      />
+    </div>
     <div
       :class="[
         message.mine ? 'bg-emerald-100' : 'bg-white',

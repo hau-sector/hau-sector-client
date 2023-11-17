@@ -9,23 +9,20 @@ const props = defineProps<{
 const { contacts } = useContactsStore()
 
 const filteredContacts = computed(() => contacts.value.filter(({ online }) => online === props.online))
-const color = computed(() => props.online ? 'text-emerald-500' : 'text-rose-500')
-const text = computed(() => props.online ? 'В сети' : 'Не в сети')
+const color = computed(() => props.online ? 'text-emerald-400' : 'text-rose-500')
 </script>
 
 <template>
   <div class="flex flex-col gap-4">
-    <div class="flex gap-2 mx-2 mt-2 items-center justify-center">
-      <i class="pi bi-circle-fill" :class="color" />
-      <span class="text-xl">{{ text }}</span>
-    </div>
-
     <div class="flex flex-col">
       <div v-for="contact of filteredContacts" :key="contact.id">
         <div
           class="flex gap-2 items-center py-4 px-6"
         >
-          <img :src="contact.avatar" class="w-8 mr-2 rounded-full">
+          <div class="flex items-end mr-2 relative">
+            <img :src="contact.avatar" class="w-8 rounded-full shadow-md">
+            <i class="pi bi-circle-fill text-xs absolute left-7 top-5 drop-shadow-md" :class="color" />
+          </div>
           <span>{{ contact.surname }} {{ contact.name }}, кв. {{
             contact.flat
           }}</span>
