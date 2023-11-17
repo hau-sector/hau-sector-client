@@ -20,10 +20,10 @@ const text = computed(() => props.online ? 'В сети' : 'Не в сети')
       <span class="text-xl">{{ text }}</span>
     </div>
 
-    <div class="panel flex flex-col">
+    <div class="flex flex-col">
       <div v-for="contact of filteredContacts" :key="contact.id">
         <div
-          class="flex gap-2 items-center py-4 px-6 hover:cursor-pointer hover:bg-slate-50"
+          class="flex gap-2 items-center py-4 px-6"
         >
           <img :src="contact.avatar" class="w-8 mr-2 rounded-full">
           <span>{{ contact.surname }} {{ contact.name }}, кв. {{

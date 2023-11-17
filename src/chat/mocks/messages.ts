@@ -122,6 +122,7 @@ export const messagesMock = [
       ...item,
       mine: faker.datatype.boolean({ probability: 0.2 }),
       sender: faker.helpers.arrayElement(senders),
+      time: faker.date.recent({ days: 30 }).toISOString(),
       __typename: 'MessageObject',
     }))
 
@@ -148,6 +149,7 @@ export const messagesMock = [
       ...payload,
       id: faker.database.mongodbObjectId(),
       mine: true,
+      time: new Date().toISOString(),
       sender,
       __typename: 'MessageObject',
     }

@@ -70,7 +70,7 @@ export const newsMock = [
           title: 'Информация по оплате коммунальных услуг',
           content: 'Напоминаем жителям о сроках и способах оплаты коммунальных услуг. Дополнительную информацию можно получить в офисе управляющей компании.',
           publishedAt: '2023-10-29T13:00:00Z',
-          image: new URL('../assets/hau.jpg', import.meta.url).href,
+          image: new URL('../assets/hau.jpeg', import.meta.url).href,
         },
         {
           id: '10',

@@ -6,6 +6,7 @@ export interface Message {
   id: string
   text: string
   mine: boolean
+  time: string
   sender: Contact
   __typename: 'MessageObject'
 }
@@ -15,6 +16,7 @@ export const MESSAGE = gql`
       id
       text
       mine
+      time
       sender {
         ...Contact
       }

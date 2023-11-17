@@ -23,11 +23,11 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-highlight rounded-full
+  @apply bg-slate-200 rounded-full
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary rounded-full
+  @apply bg-slate-300 rounded-full
 }
 
 ::-webkit-scrollbar-button {

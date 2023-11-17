@@ -5,6 +5,7 @@ import { tryOnMounted } from '@vueuse/core'
 import Button from 'primevue/button'
 import { computed, reactive } from 'vue'
 import InputText from 'primevue/inputtext'
+import { useSettingsStore } from '@/shared/stores/settings'
 import { useMessagesStore } from '@/chat/stores/messages'
 import { usePaymentDatasStore } from '@/payments/stores/payment-datas'
 import { useNewsStore } from '@/news/stores/news'
@@ -61,6 +62,8 @@ async function submit() {
     $v.value.$reset()
   }
 }
+
+const { dark } = useSettingsStore()
 </script>
 
 <template>
@@ -74,13 +77,16 @@ async function submit() {
             </span>
             <router-link
               :to="{ name: RouteName.PAYMENTS }"
-              class="panel flex flex-col flex-1 gap-6 p-6 text-inherit no-underline transition cursor-pointer hover:shadow-red-100 hover:shadow-lg
+              class="panel flex flex-col flex-1 gap-6 p-6 text-inherit no-underline transition cursor-pointer hover:shadow-lg
               overflow-hidden relative before:content-[''] before:z-0 before:absolute before:inset-0 before:bg-gradient-to-tr before:via-transparent
               before:origin-bottom-left before:scale-75 before:opacity-30"
-              :class="credit ? 'before:from-emerald-500' : 'before:from-red-500'"
+              :class="[
+                credit ? 'before:from-emerald-500' : 'before:from-red-500',
+                dark ? 'hover:shadow-black' : 'hover:shadow-red-100',
+              ]"
             >
               <div
-                :class="credit ? 'text-emerald-600' : 'text-red-400'"
+                :class=" credit ? 'text-emerald-600' : 'text-red-400'"
                 class="text-2xl"
               >
                 {{ !credit ? 'задолженность' : 'переплата' }}:
@@ -100,7 +106,10 @@ async function submit() {
 
           <div class="flex flex-1 flex-col gap-2">
             <span class="text-2xl my-3">Чат</span>
-            <div class="panel flex flex-col flex-1 p-3 justify-between gap-6 transition hover:shadow-lg hover:shadow-sky-100">
+            <div
+              class="panel flex flex-col flex-1 p-3 justify-between gap-6 transition hover:shadow-lg"
+              :class="dark ? 'hover:shadow-black' : 'hover:shadow-sky-100'"
+            >
               <router-link
                 :to="{ name: RouteName.CHAT }"
                 class="flex flex-col flex-1 gap-6 text-inherit no-underline"
@@ -119,7 +128,13 @@ async function submit() {
                     class="flex items-end gap-2"
                   >
                     <img v-if="!message.mine" :src="message.sender.avatar" class="rounded-full w-5">
-                    <span class="py-1 px-2 rounded-xl max-w-sm" :class="message.mine ? 'ml-auto bg-emerald-100' : 'mr-auto bg-slate-100'">{{ message.text }}</span>
+                    <span
+                      class="py-1 px-2 rounded-xl max-w-sm"
+                      :class="[
+                        message.mine ? 'ml-auto bg-emerald-100' : 'mr-auto bg-slate-100',
+                        dark ? 'text-black' : '',
+                      ]"
+                    >{{ message.text }}</span>
                   </div>
                 </div>
               </router-link>
@@ -153,7 +168,7 @@ async function submit() {
               v-for="meta of meterRegistratorMetas" :key="meta"
               :to="{ name: RouteName.REGISTER }"
               class="flex flex-1 text-inherit no-underline transition cursor-pointer hover:shadow-lg"
-              :class="[meta.shadow]"
+              :class="dark ? 'hover:shadow-black' : [meta.shadow]"
             >
               <MeterRegistrator class="flex-1" :type="meta.type" :mini="true" />
             </router-link>
@@ -168,7 +183,8 @@ async function submit() {
         <router-link
           v-for="vote of actualVotes" :key="vote"
           :to="{ name: RouteName.VOTES }"
-          class="panel flex flex-col gap-2 px-6 py-4 text-inherit  no-underline transition cursor-pointer hover:shadow-indigo-100 hover:shadow-lg"
+          class="panel flex flex-col gap-2 px-6 py-4 text-inherit  no-underline transition cursor-pointer hover:shadow-lg"
+          :class="dark ? 'hover:shadow-black' : 'hover:shadow-indigo-100'"
         >
           <span> {{ vote.title }}</span>
         </router-link>
@@ -184,7 +200,8 @@ async function submit() {
           v-for="item of actualNews"
           :key="item"
           :to="{ name: RouteName.NEWS }"
-          class="panel flex items-center h-16 gap-6 text-inherit no-underline transition cursor-pointer hover:shadow-indigo-100 hover:shadow-lg"
+          class="panel flex items-center h-16 gap-6 text-inherit no-underline transition cursor-pointer hover:shadow-lg"
+          :class="dark ? 'hover:shadow-black' : 'hover:shadow-indigo-100'"
         >
           <img class="w-24 h-full border-r-4" :src="item.image">
           <span>{{ item.title }}</span>
@@ -198,7 +215,8 @@ async function submit() {
         <router-link
           v-for="issue of actualIssues" :key="issue"
           :to="{ name: RouteName.ISSUES }"
-          class="panel flex flex-col flex-auto gap-2 px-6 py-4 justify-center text-inherit no-underline transition cursor-pointer hover:shadow-indigo-100 hover:shadow-lg"
+          class="panel flex flex-col flex-auto gap-2 px-6 py-4 justify-center text-inherit no-underline transition cursor-pointer hover:shadow-lg"
+          :class="dark ? 'hover:shadow-black' : 'hover:shadow-indigo-100'"
         >
           <span> {{ issue.title }}</span>
         </router-link>

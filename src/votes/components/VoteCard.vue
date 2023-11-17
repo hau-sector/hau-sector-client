@@ -85,7 +85,7 @@ tryOnMounted(updateChartData)
     </div>
     <div> {{ vote.content }} </div>
 
-    <div v-if="!answer" class="flex justify-around items-center">
+    <div v-if="!answer" class="flex justify-around items-center mt-auto">
       <div v-for="category in categories" :key="category.key" class="flex gap-2">
         <RadioButton v-model="selectedCategory" :input-id="category.key" :value="category.key" />
         <label :for="category.key">{{ category.label }}</label>

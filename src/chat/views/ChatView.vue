@@ -5,7 +5,7 @@ import ContactsList from '@/chat/components/ContactsList.vue'
 
 <template>
   <div class="flex gap-6">
-    <div class="flex-2 flex flex-col gap-6 p-4 overflow-auto">
+    <div class="flex-2 flex flex-col gap-6 overflow-auto">
       <ContactsList :online="true" />
       <ContactsList :online="false" />
     </div>

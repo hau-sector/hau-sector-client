@@ -100,6 +100,7 @@ type MessageObject {
   id: ID!
   text: String!
   mine: Boolean!
+  time: String!
   sender: ContactObject!
 }
 
