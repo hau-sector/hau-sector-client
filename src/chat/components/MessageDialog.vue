@@ -9,7 +9,6 @@ const props = defineProps<{
 }>()
 const { dark } = useSettingsStore()
 const time = computed(() => `${moment(props.message.time).hour()}:${moment(props.message.time).minute()}`)
-console.log(props.message.time)
 </script>
 
 <template>
@@ -20,15 +19,17 @@ console.log(props.message.time)
         message.mine ? 'bg-emerald-100' : 'bg-white',
         dark ? 'text-black' : '',
       ]"
-      class="panel flex flex-col items-end justify-between px-4 py-2 min-w-[10rem] max-w-[30rem] xl:max-w-[50rem] rounded-xl"
+      class="panel flex flex-col items-end justify-between px-4 py-2 max-w-[30rem] xl:max-w-[50rem] rounded-xl"
     >
       <span class="break-words">{{ props.message.text }}</span>
-      <span
-        v-if="!props.message.mine"
+      <div
         class="self-end text-slate-400"
       >
-        {{ props.message.sender.name }} {{ props.message.sender.surname }}, {{ time }}
-      </span>
+        <span v-if="!props.message.mine">
+          {{ props.message.sender.name }} {{ props.message.sender.surname }},
+        </span>
+        <span>{{ time }}</span>
+      </div>
     </div>
   </div>
 </template>

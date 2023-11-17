@@ -70,7 +70,7 @@ const { dark } = useSettingsStore()
   <div class="flex gap-2 xl:gap-10 flex-col">
     <div class="flex flex-col xl:flex-row gap-2 xl:gap-10">
       <div class="flex flex-col flex-1 gap-2 xl:gap-10 xl:min-w-[68rem]">
-        <div class="flex flex-col xl:flex-row gap-2 xl:gap-10 flex-1">
+        <div class="flex flex-col xl:flex-row gap-2 xl:gap-10">
           <div class="flex flex-col gap-2 flex-1">
             <span class="text-2xl my-3">
               Баланс
