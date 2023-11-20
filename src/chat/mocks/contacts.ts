@@ -21,6 +21,6 @@ export const contactsMock = [
       __typename: 'ContactObject',
     }))
 
-    return res(ctx.data({ contacts }), ctx.delay('real'))
+    return res(ctx.data({ contacts }))
   }),
 ]

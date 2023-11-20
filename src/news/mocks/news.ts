@@ -99,6 +99,6 @@ export const newsMock = [
         __typename: 'NewsObject',
       }))
 
-      return res(ctx.data({ news }), ctx.delay('real'))
+      return res(ctx.data({ news }))
     }),
 ]

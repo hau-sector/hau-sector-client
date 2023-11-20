@@ -22,6 +22,6 @@ export const buildingsMock = [
       }),
     )
 
-    return res(ctx.data({ myBuildings }), ctx.delay('real'))
+    return res(ctx.data({ myBuildings }))
   }),
 ]

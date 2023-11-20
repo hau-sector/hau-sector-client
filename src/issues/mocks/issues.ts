@@ -172,7 +172,7 @@ export const issuesMock = [
       //   }),
       // )
 
-      return res(ctx.data({ issues }), ctx.delay('real'))
+      return res(ctx.data({ issues }))
     }),
   server.mutation<
         { createIssue: Issue },
@@ -188,6 +188,6 @@ export const issuesMock = [
         __typename: 'IssueObject',
       }
 
-      return res(ctx.data({ createIssue }), ctx.delay('real'))
+      return res(ctx.data({ createIssue }))
     }),
 ]

@@ -126,7 +126,7 @@ export const messagesMock = [
       __typename: 'MessageObject',
     }))
 
-    return res(ctx.data({ messages }), ctx.delay('real'))
+    return res(ctx.data({ messages }))
   }),
   server.mutation<
     { createMessage: Message },
@@ -154,6 +154,6 @@ export const messagesMock = [
       __typename: 'MessageObject',
     }
 
-    return res(ctx.data({ createMessage }), ctx.delay('real'))
+    return res(ctx.data({ createMessage }))
   }),
 ]

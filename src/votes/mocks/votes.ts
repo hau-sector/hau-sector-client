@@ -176,6 +176,6 @@ export const votesMock = [
       __typename: 'VoteObject',
     }))
 
-    return res(ctx.data({ votes }), ctx.delay('real'))
+    return res(ctx.data({ votes }))
   }),
 ]

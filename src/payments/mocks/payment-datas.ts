@@ -24,7 +24,7 @@ export const paymentDatasMock = [
       }),
     )
 
-    return res(ctx.data({ paymentDatas }), ctx.delay('real'))
+    return res(ctx.data({ paymentDatas }))
   }),
 
   server.query<
@@ -45,6 +45,6 @@ export const paymentDatasMock = [
       }),
     )
 
-    return res(ctx.data({ paymentDatas }), ctx.delay('real'))
+    return res(ctx.data({ paymentDatas }))
   }),
 ]

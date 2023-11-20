@@ -102,6 +102,7 @@ watch([meterDatas], updateChartData)
         :loading="loading"
         class="panel h-[40rem] xl:h-[calc(100vh-19rem)]"
         :value="meterDatas"
+        data-test="meter-history-table"
       >
         <template #header>
           <TabMenu

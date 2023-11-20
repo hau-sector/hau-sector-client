@@ -19,6 +19,6 @@ export const userMock = [
       __typename: 'UserObject',
     }
 
-    return res(ctx.data({ myUser }), ctx.delay('real'))
+    return res(ctx.data({ myUser }))
   }),
 ]

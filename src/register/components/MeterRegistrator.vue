@@ -129,10 +129,14 @@ function submit() {
             id="number-input"
             v-model="$v.meter.$model"
             class="w-full"
+            data-test="meter-input"
             :class="{ 'p-invalid': $v.meter.$dirty && $v.meter.$invalid }"
             :disabled="inputReached"
             :min-fraction-digits="2"
             :max-fraction-digits="3"
+            :pt="{
+              input: { 'data-test': 'meter-input-value' },
+            }"
             @keyup.enter="submit"
             @input="value = $event.value"
           />
@@ -141,9 +145,13 @@ function submit() {
         <Button
           :severity="buttonSeverity"
           raised
+          data-test="meter-button"
           :label="currentValue ? 'Изменить' : 'Отправить'"
           :icon="currentValue ? 'bi-pencil' : 'bi-floppy'"
           :disabled="buttonDisabled"
+          :pt="{
+            label: { 'data-test': 'meter-button-label' },
+          }"
           @click="submit"
         />
       </div>
