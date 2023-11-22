@@ -76,6 +76,7 @@ const { dark } = useSettingsStore()
               Баланс
             </span>
             <router-link
+              data-test="home-balance"
               :to="{ name: RouteName.PAYMENTS }"
               class="panel flex flex-col flex-1 gap-6 p-6 text-inherit no-underline transition cursor-pointer hover:shadow-lg
               overflow-hidden relative before:content-[''] before:z-0 before:absolute before:inset-0 before:bg-gradient-to-tr before:via-transparent
@@ -111,6 +112,7 @@ const { dark } = useSettingsStore()
               :class="dark ? 'hover:shadow-black' : 'hover:shadow-sky-100'"
             >
               <router-link
+                data-test="home-chat"
                 :to="{ name: RouteName.CHAT }"
                 class="flex flex-col flex-1 gap-6 text-inherit no-underline"
               >
@@ -124,7 +126,8 @@ const { dark } = useSettingsStore()
 
                 <div class="flex flex-col gap-2">
                   <div
-                    v-for="message of lastMessages" :key="message.id"
+                    v-for="message of lastMessages"
+                    :key="message.id" data-test="home-chat-messages"
                     class="flex items-end gap-2"
                   >
                     <img v-if="!message.mine" :src="message.sender.avatar" class="rounded-full w-5">
@@ -142,11 +145,13 @@ const { dark } = useSettingsStore()
               <div class="flex justify-between gap-2">
                 <InputText
                   v-model="$v.text.$model"
+                  data-test="home-chat-input"
                   class="flex flex-1 border-0 h-10 p-0 px-2 justify-center"
                   placeholder="Введите ответ..."
                   @keydown.exact.enter.prevent="submit"
                 />
                 <Button
+                  data-test="home-chat-button"
                   text
                   severity="secondary"
                   :disabled="$v.$invalid"
@@ -165,7 +170,8 @@ const { dark } = useSettingsStore()
           </span>
           <div class="flex gap-5 flex-col xl:flex-row">
             <router-link
-              v-for="meta of meterRegistratorMetas" :key="meta"
+              v-for="meta of meterRegistratorMetas"
+              :key="meta" data-test="home-meter"
               :to="{ name: RouteName.REGISTER }"
               class="flex flex-1 text-inherit no-underline transition cursor-pointer hover:shadow-lg"
               :class="dark ? 'hover:shadow-black' : [meta.shadow]"
@@ -181,7 +187,8 @@ const { dark } = useSettingsStore()
           Актуальные голосования
         </span>
         <router-link
-          v-for="vote of actualVotes" :key="vote"
+          v-for="vote of actualVotes"
+          :key="vote" data-test="home-votes"
           :to="{ name: RouteName.VOTES }"
           class="panel flex flex-col gap-2 px-6 py-4 text-inherit  no-underline transition cursor-pointer hover:shadow-lg"
           :class="dark ? 'hover:shadow-black' : 'hover:shadow-indigo-100'"
@@ -199,6 +206,7 @@ const { dark } = useSettingsStore()
         <router-link
           v-for="item of actualNews"
           :key="item"
+          data-test="home-news"
           :to="{ name: RouteName.NEWS }"
           class="panel flex items-center h-16 gap-6 text-inherit no-underline transition cursor-pointer hover:shadow-lg"
           :class="dark ? 'hover:shadow-black' : 'hover:shadow-indigo-100'"
@@ -213,7 +221,8 @@ const { dark } = useSettingsStore()
           Актуальные заявки
         </span>
         <router-link
-          v-for="issue of actualIssues" :key="issue"
+          v-for="issue of actualIssues"
+          :key="issue" data-test="home-issues"
           :to="{ name: RouteName.ISSUES }"
           class="panel flex flex-col flex-auto gap-2 px-6 py-4 justify-center text-inherit no-underline transition cursor-pointer hover:shadow-lg"
           :class="dark ? 'hover:shadow-black' : 'hover:shadow-indigo-100'"

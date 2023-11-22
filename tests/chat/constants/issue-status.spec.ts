@@ -9,6 +9,6 @@ describe('issue-status', () => {
   it('should be equal to value', () => {
     expect(IssueStatus.SENT).toStrictEqual('SENT')
     expect(IssueStatus.DONE).toStrictEqual('DONE')
-    expect(IssueStatus.PROGRESS).toStrictEqual('PROPGRESS')
+    expect(IssueStatus.PROGRESS).toStrictEqual('PROGRESS')
   })
 })

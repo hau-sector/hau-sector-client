@@ -47,9 +47,36 @@ describe('Внесение данных счетчиков', () => {
   })
 
   it('Пользователь может просматривать историю внесенных данных', () => {
-    cy.get('[data-test="register-view"]').scrollTo('bottom')
-
     cy.get('[data-test="meter-history-table"]')
-      .should('exist').and('be.visible')
+      .scrollIntoView()
+      .should('exist')
+      .and('be.visible')
+  })
+
+  it('Пользователь может выбирать период просмотра истории', () => {
+    cy.get('[data-test="meter-history-select"]')
+      .scrollIntoView()
+      .should('exist')
+      .and('be.visible')
+
+    cy.get('[data-test="meter-history-calendar"]')
+      .should('exist')
+      .and('be.visible')
+
+    cy.get('[data-test="meter-history-select-button"]')
+      .last()
+      .click()
+
+    cy.wait(100)
+
+    cy.get('[data-test="meter-history-select-button"][data-p-highlight="true"]')
+      .should('exist')
+  })
+
+  it('Пользователь имеет доступ к наглядной информации по выставленным счетам', () => {
+    cy.get('[data-test="meter-history-chart"]')
+      .scrollIntoView()
+      .should('exist')
+      .and('be.visible')
   })
 })

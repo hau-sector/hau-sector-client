@@ -6,8 +6,8 @@ import { usePaymentDatasService } from '@/payments/services/payment-datas'
 import type { PaymentData } from '@/payments/dto/payment-data'
 
 export const usePaymentDatasStore = createGlobalState(() => {
-  const paymentDatas = shallowRef<PaymentData[]>()
-  const unpaidPaymentDatas = shallowRef<PaymentData[]>()
+  const paymentDatas = shallowRef<PaymentData[]>([])
+  const unpaidPaymentDatas = shallowRef<PaymentData[]>([])
   const start = ref<Date>()
   const end = ref<Date>()
 

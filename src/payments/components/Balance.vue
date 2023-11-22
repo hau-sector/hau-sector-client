@@ -38,7 +38,7 @@ const visible = ref<Boolean>(false)
         <div class="m-0 text-2xl">
           {{ credit ? 'переплата' : 'задолженность' }}
         </div>
-        <div class="text-6xl m-0">
+        <div data-test="balance-info" class="text-6xl m-0">
           - {{ accountAmount }}.00 руб
         </div>
       </div>
@@ -47,7 +47,13 @@ const visible = ref<Boolean>(false)
         <div v-if="!credit">
           Всего не оплачено счетов: <span class="text-2xl">{{ totalUnpaid }}</span>
         </div>
-        <Button :severity="buttonOptions.severity" :label="buttonOptions.label" class="w-56" @click="visible = true" />
+        <Button
+          data-test="balance-full-amount-button"
+          :severity="buttonOptions.severity"
+          :label="buttonOptions.label"
+          class="w-56"
+          @click="visible = true"
+        />
 
         <PaymentDialog v-model:visible="visible" :value="accountAmount" />
       </div>

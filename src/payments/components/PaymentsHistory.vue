@@ -46,16 +46,22 @@ function extractMonth(value: Date) {
     <div class="flex flex-col gap-5">
       <div class="flex gap-10 justify-center">
         <SelectButton
-          v-model="period" :options="periodOptions"
+          v-model="period"
+          :pt="{
+            button: { 'data-test': 'payment-history-select-button' },
+          }"
+          data-test="payment-history-select" :options="periodOptions"
           option-label="label"
         />
         <Calendar
-          v-model="range" :manual-input="true" class="w-64"
+          v-model="range"
+          data-test="payment-history-calendar" :manual-input="true" class="w-64"
           placeholder="дд.мм.гг - дд.мм.гг" selection-mode="range"
           show-icon date-format="dd.mm.yy"
         />
       </div>
       <DataTable
+        data-test="payment-history-table"
         scrollable
         scroll-height="flex"
         sort-field="paidAt"

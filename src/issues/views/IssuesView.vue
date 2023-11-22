@@ -30,10 +30,14 @@ const issuesMap = computed(() =>
   <div class="flex flex-col gap-10">
     <IssueForm class="shrink-0 mx-auto w-[34rem] max-w-full" />
     <div>
-      <Accordion :active-index="0">
+      <Accordion
+        data-test="issue-list"
+        :active-index="0"
+      >
         <AccordionTab
           v-for="(issues, status) of issuesMap"
-          :key="status" :header="titleMap[status]"
+          :key="status"
+          :header="titleMap[status]"
           :pt="{
             header: { class: 'text-lg' },
           }"
@@ -42,6 +46,7 @@ const issuesMap = computed(() =>
             <IssueCard
               v-for="issue of issues"
               :key="issue.id"
+              data-test="issue-card"
               :issue="issue"
               class="h-full"
             />

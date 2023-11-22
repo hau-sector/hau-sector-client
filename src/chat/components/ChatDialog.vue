@@ -44,18 +44,19 @@ tryOnMounted(scrollDown)
 <template>
   <div class="flex flex-col gap-1">
     <div ref="listRef" class="flex flex-col flex-1 p-6 gap-4 overflow-auto">
-      <MessageDialog v-for="message of messages" :key="message.id" :message="message" />
+      <MessageDialog v-for="message of messages" :key="message.id" data-test="chat-message-dialog" :message="message" />
     </div>
 
     <div class="panel flex flex-2 gap-1 justify-between p-2">
       <Textarea
         v-model="$v.text.$model"
+        data-test="chat-input-area"
         class="flex-1 border-0"
         auto-resize
         placeholder="Введите сообщение..."
         @keydown.exact.enter.prevent="submit"
       />
-      <Button text severity="secondary" class="flex justify-center" :disabled="$v.$invalid" @click="submit">
+      <Button data-test="chat-button" text severity="secondary" class="flex justify-center" :disabled="$v.$invalid" @click="submit">
         <i class="pi bi-arrow-return-right text-3xl" />
       </Button>
     </div>

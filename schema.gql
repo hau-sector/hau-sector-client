@@ -1,7 +1,6 @@
 schema {
     query: Query
     mutation: Mutation
-    subscription: Subscription
 }
 
 type Query {
@@ -24,10 +23,6 @@ type Mutation {
   createMessage(payload: CreateMessageInput, buildingId: String!): MessageObject!
 }
 
-type Subscription {
-  a: String
-}
-
 type UserObject {
   id: ID!
   firstName: String!
@@ -40,13 +35,6 @@ type BuildingObject {
   id: ID!
   street: String!
   house: String!
-}
-
-type FlatObject {
-  id: ID!
-  flat: Int!
-  buildingId: String!
-  building: BuildingObject!
 }
 
 type MeterDataObject {

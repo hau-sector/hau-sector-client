@@ -87,15 +87,15 @@ tryOnMounted(updateChartData)
 
     <div v-if="!answer" class="flex justify-around items-center mt-auto">
       <div v-for="category in categories" :key="category.key" class="flex gap-2">
-        <RadioButton v-model="selectedCategory" :input-id="category.key" :value="category.key" />
+        <RadioButton v-model="selectedCategory" data-test="vote-card-radiobutton" :input-id="category.key" :value="category.key" />
         <label :for="category.key">{{ category.label }}</label>
       </div>
       <Toast />
-      <Button :disabled="!selectedCategory" label="Проголосовать" severity="success" @click="submit()" />
+      <Button data-test="vote-card-button" :disabled="!selectedCategory" label="Проголосовать" severity="success" @click="submit()" />
     </div>
 
     <div v-else>
-      <Chart type="bar" :data="chartData" :options="{ responsive: true, maintainAspectRatio: false }" />
+      <Chart type="bar" data-test="vote-card-chart" :data="chartData" :options="{ responsive: true, maintainAspectRatio: false }" />
     </div>
   </div>
 </template>

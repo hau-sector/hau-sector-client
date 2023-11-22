@@ -31,10 +31,11 @@ async function submit() {
 
 <template>
   <div class="panel p-3 flex flex-col gap-3">
-    <TitledComponent mini title="Новая заявка" icon="pi bi-building-add">
+    <TitledComponent data-test="issue-form" mini title="Новая заявка" icon="pi bi-building-add">
       <span class="p-float-label mt-5">
         <InputText
           v-model="$v.title.$model"
+          data-test="issue-form-input-header"
           class="w-full"
           :class="{ 'p-invalid': $v.title.$dirty && $v.title.$invalid }"
         />
@@ -44,6 +45,7 @@ async function submit() {
       <span class="p-float-label mt-5">
         <Textarea
           v-model="$v.content.$model"
+          data-test="issue-form-text"
           auto-resize
           class="w-full resize-y"
           :class="{ 'p-invalid': $v.content.$dirty && $v.content.$invalid }"
@@ -51,7 +53,7 @@ async function submit() {
         <label>Описание</label>
       </span>
 
-      <Button severity="success" class="mx-auto flex flex-row-reverse gap-2" :disabled="$v.$invalid" icon="bi-send" label="Отправить" @click="submit" />
+      <Button data-test="issue-form-button" severity="success" class="mx-auto flex flex-row-reverse gap-2" :disabled="$v.$invalid" icon="bi-send" label="Отправить" @click="submit" />
     </TitledComponent>
   </div>
 </template>

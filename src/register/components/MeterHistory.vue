@@ -32,7 +32,7 @@ const { ignoreUpdates: ignoreRangeUpdates } = ignorableWatch(range, () => period
 whenever(
   period,
   ({ value }) => ignoreRangeUpdates(() =>
-    range.value = [moment().subtract(value, 'months').toDate(), new Date()],
+    range.value = [moment().subtract(value, 'months').add(1, 'day').toDate(), new Date()],
   ),
   { immediate: true },
 )
@@ -86,9 +86,18 @@ watch([meterDatas], updateChartData)
   <TitledComponent title="История" icon="pi bi-calendar3">
     <div class="flex flex-col gap-5">
       <div class="flex gap-10 justify-center">
-        <SelectButton v-model="period" :options="periodOptions" option-label="label" />
+        <SelectButton
+          v-model="period"
+          :pt="{
+            button: { 'data-test': 'meter-history-select-button' },
+          }"
+          data-test="meter-history-select"
+          :options="periodOptions"
+          option-label="label"
+        />
         <Calendar
-          v-model="range" :manual-input="true" class="w-64"
+          v-model="range"
+          data-test="meter-history-calendar" :manual-input="true" class="w-64"
           placeholder="дд.мм.гг - дд.мм.гг" selection-mode="range"
           show-icon date-format="dd.mm.yy"
         />
@@ -140,6 +149,7 @@ watch([meterDatas], updateChartData)
 
         <template #footer>
           <Chart
+            data-test="meter-history-chart"
             class="bg-card p-5 pt-10 h-56"
             type="line"
             :data="chartData"

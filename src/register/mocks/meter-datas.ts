@@ -36,19 +36,19 @@ export const meterDatasMock = [
     { currentMeterData: MeterData | undefined },
     { type: MeterType; buildingId: string }
   >('GetCurrentMeterData', (req, res, ctx) => {
-    // const { type } = req.variables
-    //
-    // const currentMeterData: MeterData | undefined = faker.helpers.maybe(() => ({
-    //   id: faker.database.mongodbObjectId(),
-    //   value: 10_000 + faker.number.float({ max: 1000, precision: 0.001 }),
-    //   accepted: true,
-    //   enteredAt: new Date().toISOString(),
-    //   acceptedAt: new Date().toISOString(),
-    //   updatedAt: faker.helpers.maybe(() => new Date().toISOString()),
-    //   userId: faker.database.mongodbObjectId(),
-    //   type,
-    //   __typename: 'MeterDataObject',
-    // }))
+    const { type } = req.variables
+
+    const currentMeterData: MeterData | undefined = faker.helpers.maybe(() => ({
+      id: faker.database.mongodbObjectId(),
+      value: 10_000 + faker.number.float({ max: 1000, precision: 0.001 }),
+      accepted: true,
+      enteredAt: new Date().toISOString(),
+      acceptedAt: new Date().toISOString(),
+      updatedAt: faker.helpers.maybe(() => new Date().toISOString()),
+      userId: faker.database.mongodbObjectId(),
+      type,
+      __typename: 'MeterDataObject',
+    }))
 
     return res(ctx.data({ currentMeterData: undefined }))
   }),

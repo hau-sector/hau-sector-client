@@ -4,6 +4,8 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import { ref } from 'vue'
+import Toast from 'primevue/toast'
+import { useToast } from 'primevue/usetoast'
 
 const props = defineProps<{
   visible: boolean
@@ -17,9 +19,20 @@ const emits = defineEmits<{
 const visible = useVModel(props, 'visible', emits)
 
 const agreement = ref<Boolean>(false)
+
+const toast = useToast()
+function showToast() {
+  toast.add({ severity: 'success', summary: 'Оплата', detail: 'Оплата прошла успешно', life: 3000 })
+}
+function submit() {
+  showToast()
+  agreement.value = false
+  visible.value = false
+}
 </script>
 
 <template>
+  <Toast data-test="balance-payment-toast" />
   <Dialog
     v-model:visible="visible"
     modal
@@ -32,7 +45,7 @@ const agreement = ref<Boolean>(false)
     </template>
 
     <div class="flex flex-col gap-10">
-      <Button outlined severity="secondary" class="flex flex-1 gap-2 justify-center" @click="agreement = true">
+      <Button data-test="balance-payment-sber" outlined severity="secondary" class="flex flex-1 gap-2 justify-center" @click="agreement = true">
         <img class="w-4" src="@/payments/assets/sber.jpg?url">
         <span class="text-lg">SberPay</span>
       </Button>
@@ -44,8 +57,8 @@ const agreement = ref<Boolean>(false)
           <span>Вы будете перенаправлены на страницу оплаты.</span>
           <span>Продолжить?</span>
           <div class="flex gap-2 justify-end">
-            <Button outlined label="да" />
-            <Button outlined label="нет" @click="agreement = false" />
+            <Button outlined data-test="balance-payment-yes" label="да" @click="submit" />
+            <Button outlined data-test="balance-payment-no" label="нет" @click="agreement = false" />
           </div>
         </div>
       </Dialog>
@@ -86,6 +99,7 @@ const agreement = ref<Boolean>(false)
 
       <div class="flex flex-col gap-2">
         <Button
+          data-test="balance-payment-card"
           outlined class="flex flex-1 text-lg" severity="success"
           :label="`Оплатить ${props.value}.00 руб`" autofocus
           @click="agreement = true"
