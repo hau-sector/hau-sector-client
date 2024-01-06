@@ -11,9 +11,9 @@ vi.mock('@/chat/services/messages', () => ({
   }),
 }))
 
-vi.mock('@/shared/stores/properties', () => ({
-  usePropertiesStore: () => ({
-    selectedId: ref(''),
+vi.mock('@/shared/stores/flats', () => ({
+  useFlats: () => ({
+    buildingId: ref(''),
   }),
 }))
 

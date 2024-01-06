@@ -1,8 +1,7 @@
 import { useQuery } from '@vue/apollo-composable'
 import { createGlobalState } from '@vueuse/core'
 import gql from 'graphql-tag'
-import type { MaybeRefOrGetter } from 'vue'
-import { toValue } from 'vue'
+import {MaybeRefOrGetter, toValue} from 'vue'
 import { NEWS } from '@/news/dto/news'
 import type { News } from '@/news/dto/news'
 

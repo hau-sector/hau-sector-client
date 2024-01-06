@@ -1,9 +1,10 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  projectId: '9ey8iy',
+  projectId: 'HAU-Sector',
   e2e: {
-    baseUrl: 'http://127.0.0.1:8080',
+    baseUrl: 'http://localhost:8099',
     defaultCommandTimeout: 10000,
+    chromeWebSecurity: false,
   },
 })

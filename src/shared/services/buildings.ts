@@ -1,19 +1,19 @@
 import { useQuery } from '@vue/apollo-composable'
 import { createGlobalState } from '@vueuse/core'
 import gql from 'graphql-tag'
-import { PROPERTY } from '@/shared/dto/property'
-import type { Property } from '@/shared/dto/property'
+import type { Flat } from '@/shared/dto/flat'
+import { FLAT } from '@/shared/dto/flat'
 
 export const useBuildingsService = createGlobalState(() => ({
-  getMyProperties: () => useQuery<
-    { myBuildings: Property[] }
+  getMyFlats: () => useQuery<
+    { myFlats: Flat[] }
   >(gql`
-      query GetMyProperties {
-        myBuildings {
-          ...Property
+      query GetMyFlats {
+        myFlats {
+          ...Flat
         }
       }
-      ${PROPERTY}
+      ${FLAT}
     `,
   ),
 }))

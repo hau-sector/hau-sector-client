@@ -1,19 +1,20 @@
 import { graphql } from 'msw'
-import type { Property } from '@/shared/dto/property'
 import { faker } from '@/shared/utils/faker'
+import type { Flat } from '@/shared/dto/flat'
 
-const server = graphql.link(`${import.meta.env.VITE_API_URL}/graphql`)
+const server = graphql.link('http://127.0.0.1:5000/graphql')
 
 export const buildingsMock = [
   server.query<
-    { myBuildings: Property[] }
-  >('GetMyProperties', (req, res, ctx) => {
-    const myBuildings: Property[] = Array.from(
+    { myFlats: Flat[] }
+  >('GetMyFlats', (req, res, ctx) => {
+    const myFlats: Flat[] = Array.from(
       { length: 3 },
       () => ({
         id: faker.database.mongodbObjectId(),
         flat: faker.number.int({ min: 1, max: 100 }),
         building: {
+          id: faker.database.mongodbObjectId(),
           street: faker.location.streetName(),
           house: faker.number.int({ min: 1, max: 100 }).toString(),
           __typename: 'BuildingObject',
@@ -22,6 +23,6 @@ export const buildingsMock = [
       }),
     )
 
-    return res(ctx.data({ myBuildings }))
+    return res(ctx.data({ myFlats }))
   }),
 ]

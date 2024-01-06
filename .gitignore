@@ -3,6 +3,7 @@
 /node_modules
 /electron/*.js
 /s3
+/cypress/screenshots
 
 # Environment
 /.env*.local

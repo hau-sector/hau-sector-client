@@ -5,22 +5,22 @@ schema {
 
 type Query {
   myUser: UserObject!
-  myBuildings: [BuildingObject!]!
-  meterDatas(type: MeterType!, start: String!, end: String!, buildingId: String!): [MeterDataObject!]!
-  currentMeterData(type: MeterType!, buildingId: String!): MeterDataObject
+  myFlats: [FlatObject!]!
+  meterDatas(flatId: String!, type: MeterType!, start: String!, end: String!): [MeterDataObject!]!
+  currentMeterData(flatId: String!, type: MeterType!): MeterDataObject
+  paymentDatas(flatId: String!, paid: Boolean, start: String, end: String): [PaymentDataObject!]!
   news(buildingId: String!): [NewsObject!]!
   issues(buildingId: String!): [IssueObject!]!
   votes(buildingId: String!): [VoteObject!]!
-  paymentDatas(paid: Boolean, start: String, end: String, buildingId: String!): [PaymentDataObject!]!
   contacts(buildingId: String!): [ContactObject!]!
   messages(buildingId: String!): [MessageObject!]!
 }
 
 type Mutation {
-  createCurrentMeterData(payload: CreateMeterDataInput, buildingId: String!): MeterDataObject!
-  updateCurrentMeterData(payload: UpdateMeterDataInput, buildingId: String!): MeterDataObject!
-  createIssue(payload: CreateIssueInput, buildingId: String!): IssueObject!
-  createMessage(payload: CreateMessageInput, buildingId: String!): MessageObject!
+  createCurrentMeterData(flatId: String!, payload: CreateMeterDataInput): MeterDataObject!
+  updateCurrentMeterData(flatId: String!, payload: UpdateMeterDataInput): MeterDataObject!
+  createIssue(buildingId: String!, payload: CreateIssueInput): IssueObject!
+  createMessage(buildingId: String!, payload: CreateMessageInput): MessageObject!
 }
 
 type UserObject {
@@ -37,6 +37,13 @@ type BuildingObject {
   house: String!
 }
 
+type FlatObject {
+  id: ID!
+  flat: Int!
+  buildingId: String!
+  building: BuildingObject!
+}
+
 type MeterDataObject {
   id: ID!
   value: Float!
@@ -45,8 +52,8 @@ type MeterDataObject {
   acceptedAt: String
   updatedAt: String
   userId: String!
-  buildingId: String!
-  building: BuildingObject!
+  flatId: String!
+  flat: FlatObject!
   type: MeterType!
 }
 
@@ -116,8 +123,8 @@ type PaymentDataObject {
   paid: Boolean!
   paidAt: String!
   userId: String!
-  buildingId: String!
-  building: BuildingObject!
+  flatId: String!
+  flat: FlatObject!
 }
 
 enum MeterType {

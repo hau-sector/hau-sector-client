@@ -3,7 +3,7 @@ import { VoteAnswer } from '@/votes/constants/vote-answer'
 import { VoteStatus } from '@/votes/constants/vote-status'
 import type { Vote } from '@/votes/dto/vote'
 
-const server = graphql.link(`${import.meta.env.VITE_API_URL}/graphql`)
+const server = graphql.link('http://127.0.0.1:5000/graphql')
 
 export const votesMock = [
   server.query<

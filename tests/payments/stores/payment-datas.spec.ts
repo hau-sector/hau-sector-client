@@ -11,9 +11,9 @@ vi.mock('@/payments/services/payment-datas', () => ({
   }),
 }))
 
-vi.mock('@/shared/stores/properties', () => ({
-  usePropertiesStore: () => ({
-    selectedId: ref(''),
+vi.mock('@/shared/stores/flats', () => ({
+  useFlatsStore: () => ({
+    flatId: ref(''),
   }),
 }))
 

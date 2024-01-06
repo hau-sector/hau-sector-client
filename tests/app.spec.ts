@@ -9,9 +9,9 @@ import { primeVueConfig } from '@/core/constants/prime-vue-config'
 import App from '@/App.vue'
 import { RouteName } from '@/shared/constants/route-name'
 
-vi.mock('@/shared/stores/properties', () => ({
-  usePropertiesStore: () => ({
-    selectedId: ref('1'),
+vi.mock('@/shared/stores/flats', () => ({
+  useFlatsStore: () => ({
+    flatId: ref('1'),
   }),
 }))
 vi.mock('@/shared/stores/user', () => ({

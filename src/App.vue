@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { tryOnMounted } from '@vueuse/core'
 import { useRouter } from 'vue-router'
-import { usePropertiesStore } from '@/shared/stores/properties'
 import TheThemeInjector from '@/core/components/TheThemeInjector.vue'
 import TheSideMenu from '@/core/components/TheSideMenu.vue'
 import TheHeader from '@/core/components/TheHeader.vue'
+import { useFlatsStore } from '@/shared/stores/flats'
 
 const router = useRouter()
 async function preload() {
@@ -16,7 +16,7 @@ async function preload() {
 }
 tryOnMounted(preload)
 
-const { selectedId } = usePropertiesStore()
+const { flatId } = useFlatsStore()
 </script>
 
 <template>
@@ -25,7 +25,7 @@ const { selectedId } = usePropertiesStore()
   <div class="w-full h-full bg-ground flex flex-col px-3 2xl:px-5">
     <TheHeader class="mb-3 shrink-0 2xl:mb-5" />
 
-    <div v-if="selectedId" class="flex flex-1 gap-1 mb-3 2xl:mb-5 2xl:gap-4">
+    <div v-if="flatId" class="flex flex-1 gap-1 mb-3 2xl:mb-5 2xl:gap-4">
       <TheSideMenu />
 
       <RouterView v-slot="{ Component }">

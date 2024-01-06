@@ -1,9 +1,9 @@
 import { shallowRef } from '@vue/reactivity'
 import { createGlobalState, whenever } from '@vueuse/core'
 import { ref, shallowReadonly } from 'vue'
-import { usePropertiesStore } from '@/shared/stores/properties'
 import { usePaymentDatasService } from '@/payments/services/payment-datas'
 import type { PaymentData } from '@/payments/dto/payment-data'
+import { useFlatsStore } from '@/shared/stores/flats'
 
 export const usePaymentDatasStore = createGlobalState(() => {
   const paymentDatas = shallowRef<PaymentData[]>([])
@@ -12,12 +12,12 @@ export const usePaymentDatasStore = createGlobalState(() => {
   const end = ref<Date>()
 
   const paymentDatasService = usePaymentDatasService()
-  const { selectedId } = usePropertiesStore()
+  const { flatId } = useFlatsStore()
 
-  const { result, loading } = paymentDatasService.getPaymentDatas(start, end, selectedId)
+  const { result, loading } = paymentDatasService.getPaymentDatas(start, end, flatId)
   whenever(result, result => paymentDatas.value = result.paymentDatas)
 
-  const { result: unpaidResult } = paymentDatasService.getUnpaidPaymentDatas(false, selectedId)
+  const { result: unpaidResult } = paymentDatasService.getUnpaidPaymentDatas(false, flatId)
   whenever(unpaidResult, result => unpaidPaymentDatas.value = result.paymentDatas)
 
   return {

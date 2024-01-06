@@ -4,22 +4,22 @@ import { shallowReadonly } from 'vue'
 import type { CreateIssue } from '@/issues/dto/create-issue'
 import type { Issue } from '@/issues/dto/issue'
 import { useIssueService } from '@/issues/services/issues'
-import { usePropertiesStore } from '@/shared/stores/properties'
+import { useFlatsStore } from '@/shared/stores/flats'
 
 export const useIssuesStore = createGlobalState(() => {
   const issues = shallowRef<Issue[]>([])
 
   const issueService = useIssueService()
-  const { selectedId } = usePropertiesStore()
-  const { result } = issueService.getIssues(selectedId)
+  const { buildingId } = useFlatsStore()
+  const { result } = issueService.getIssues(buildingId)
   whenever(result, result => issues.value = result.issues)
 
   const { mutate } = issueService.createIssue()
   async function create(payload: CreateIssue) {
-    if (selectedId.value) {
+    if (buildingId.value) {
       const result = await mutate({
         payload,
-        buildingId: selectedId.value,
+        buildingId: buildingId.value,
       })
 
       if (result?.data)

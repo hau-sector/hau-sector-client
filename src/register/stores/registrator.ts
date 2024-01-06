@@ -1,6 +1,6 @@
 import { createGlobalState, whenever } from '@vueuse/core'
 import { readonly, ref } from 'vue'
-import { usePropertiesStore } from '@/shared/stores/properties'
+import { useFlatsStore } from '@/shared/stores/flats'
 import { useMeterDatasService } from '@/register/services/meter-datas'
 import { MeterType } from '@/register/constants/meter-type'
 import type { MeterData } from '@/register/dto/meter-data'
@@ -13,19 +13,19 @@ export const useRegistratorStore = createGlobalState(() => {
   })
 
   const meterDatasService = useMeterDatasService()
-  const { selectedId } = usePropertiesStore()
+  const { flatId } = useFlatsStore()
 
   Object.values(MeterType).forEach((type) => {
-    const { result } = meterDatasService.getCurrentMeterData(type, selectedId)
+    const { result } = meterDatasService.getCurrentMeterData(type, flatId)
     whenever(result, result => currentData.value[type] = result.currentMeterData)
   })
 
   const { mutate: createMutate } = meterDatasService.createCurrentMeterData()
   async function sendData(type: MeterType, value: number) {
-    if (selectedId.value) {
+    if (flatId.value) {
       const result = await createMutate({
         payload: { type, value },
-        buildingId: selectedId.value,
+        flatId: flatId.value,
       })
       if (result?.data)
         currentData.value[type] = result.data.createCurrentMeterData
@@ -34,10 +34,10 @@ export const useRegistratorStore = createGlobalState(() => {
 
   const { mutate: updateMutate } = meterDatasService.updateCurrentMeterData()
   async function editData(type: MeterType, value: number) {
-    if (selectedId.value) {
+    if (flatId.value) {
       const result = await updateMutate({
         payload: { type, value },
-        buildingId: selectedId.value,
+        flatId: flatId.value,
       })
       if (result?.data)
         currentData.value[type] = result.data.updateCurrentMeterData

@@ -10,13 +10,13 @@ export const usePaymentDatasService = createGlobalState(() => ({
   getPaymentDatas: (
     start: MaybeRefOrGetter<Date | undefined>,
     end: MaybeRefOrGetter<Date | undefined>,
-    buildingId: MaybeRefOrGetter<string | undefined>,
+    flatId: MaybeRefOrGetter<string | undefined>,
   ) => useQuery<
     { paymentDatas: PaymentData[] },
-    { start: Date | undefined; end: Date | undefined; buildingId: string | undefined }
+    { start: Date | undefined; end: Date | undefined; flatId: string | undefined }
   >(gql`
-    query GetPaymentDatas($start: String!, $end: String!, $buildingId: String!) {
-      paymentDatas(start: $start, end: $end, buildingId: $buildingId) {
+    query GetPaymentDatas($start: String!, $end: String!, $flatId: String!) {
+      paymentDatas(start: $start, end: $end, flatId: $flatId) {
         ...PaymentData
       }
     }
@@ -25,21 +25,21 @@ export const usePaymentDatasService = createGlobalState(() => ({
   () => ({
     start: toValue(start),
     end: toValue(end),
-    buildingId: toValue(buildingId),
+    flatId: toValue(flatId),
   }),
   () => ({
-    enabled: Boolean(toValue(start) && toValue(end) && toValue(buildingId)),
+    enabled: Boolean(toValue(start) && toValue(end) && toValue(flatId)),
   })),
 
   getUnpaidPaymentDatas: (
     paid: MaybeRefOrGetter <Boolean | undefined>,
-    buildingId: MaybeRefOrGetter<string | undefined>,
+    flatId: MaybeRefOrGetter<string | undefined>,
   ) => useQuery<
     { paymentDatas: PaymentData[] },
-    { paid: Boolean | undefined; buildingId: string | undefined }
+    { paid: Boolean | undefined; flatId: string | undefined }
   >(gql`
-    query GetUnpaidPaymentDatas($paid: Boolean!, $buildingId: String!) {
-      paymentDatas(paid: $paid, buildingId: $buildingId) {
+    query GetUnpaidPaymentDatas($paid: Boolean!, $flatId: String!) {
+      paymentDatas(paid: $paid, flatId: $flatId) {
         ...PaymentData
       }
     }
@@ -47,9 +47,9 @@ export const usePaymentDatasService = createGlobalState(() => ({
   `,
   () => ({
     paid: toValue(paid),
-    buildingId: toValue(buildingId),
+    flatId: toValue(flatId),
   }),
   () => ({
-    enabled: Boolean(toValue(buildingId)),
+    enabled: Boolean(toValue(flatId)),
   })),
 }))

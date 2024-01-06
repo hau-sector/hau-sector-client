@@ -2,7 +2,7 @@ import { graphql } from 'msw'
 import { faker } from '@/shared/utils/faker'
 import type { User } from '@/shared/dto/user'
 
-const server = graphql.link(`${import.meta.env.VITE_API_URL}/graphql`)
+const server = graphql.link('http://127.0.0.1:5000/graphql')
 
 export const userMock = [
   server.query<

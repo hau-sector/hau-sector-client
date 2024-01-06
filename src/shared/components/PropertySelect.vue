@@ -1,26 +1,25 @@
 <script setup lang="ts">
 import Dropdown from 'primevue/dropdown'
 import { watch } from 'vue'
-import type { Property } from '@/shared/dto/property'
-import { usePropertiesStore } from '@/shared/stores/properties'
+import { useFlatsStore } from '@/shared/stores/flats'
+import type { Flat } from '@/shared/dto/flat'
 
-const { properties, selectedId, loading } = usePropertiesStore()
+const { flats, flatId, loading } = useFlatsStore()
 
 // TODO: Удалить!
-watch(properties, () => selectedId.value = properties.value[0].id)
-function parseAddress(property?: Property) {
-  if (!property)
+watch(flats, () => flatId.value = flats.value[0].id)
+function parseAddress(payload?: Flat) {
+  if (!payload)
     return ''
-
-  const { building: { street, house }, flat } = property
+  const { building: { street, house }, flat } = payload
   return `ул. ${street}, д. ${house}, кв. ${flat}`
 }
 </script>
 
 <template>
   <Dropdown
-    v-model="selectedId"
-    :options="properties"
+    v-model="flatId"
+    :options="flats"
     option-value="id"
     :option-label="parseAddress"
     placeholder="Выберите адрес"
@@ -28,7 +27,3 @@ function parseAddress(property?: Property) {
     class="w-80"
   />
 </template>
-
-<style scoped>
-
-</style>

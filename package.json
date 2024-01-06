@@ -6,13 +6,12 @@
   "scripts": {
     "serve": "vite --host --port 8080",
     "build": "vite build",
-    "build:mock": "cross-env NODE_ENV=development vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint . --fix",
     "test:unit": "vitest run --coverage",
     "test:unit:watch": "vitest watch",
-    "test:e2e": "concurrently --kill-others \"yarn serve\" \"cypress run\"",
-    "test:e2e:watch": "concurrently --kill-others \"yarn serve\" \"cypress open --e2e -b chrome\""
+    "test:e2e": "concurrently --kill-others \"vite --port 8099 --mode test\" \"cypress run\"",
+    "test:e2e:watch": "concurrently --kill-others \"vite --port 8099 --mode test\" \"cypress open --e2e -b chrome\""
   },
   "dependencies": {
     "@apollo/client": "^3.8.6",

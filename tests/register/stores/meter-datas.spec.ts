@@ -9,9 +9,9 @@ vi.mock('@/register/services/meter-datas', () => ({
   }),
 }))
 
-vi.mock('@/shared/stores/properties', () => ({
-  usePropertiesStore: () => ({
-    selectedId: ref(''),
+vi.mock('@/shared/stores/flats', () => ({
+  useFlatsStore: () => ({
+    flatId: ref(''),
   }),
 }))
 

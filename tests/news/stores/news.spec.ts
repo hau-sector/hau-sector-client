@@ -10,9 +10,9 @@ vi.mock('@/news/services/news', () => ({
   }),
 }))
 
-vi.mock('@/shared/stores/properties', () => ({
-  usePropertiesStore: () => ({
-    selectedId: ref(''),
+vi.mock('@/shared/stores/flats', () => ({
+  useFlatsStore: () => ({
+    buildingId: ref(''),
   }),
 }))
 

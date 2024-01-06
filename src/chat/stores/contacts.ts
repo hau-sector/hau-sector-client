@@ -4,14 +4,14 @@ import { shallowReadonly } from 'vue'
 import { useContactsService } from '@/chat/services/contacts'
 import type { Contact } from '@/chat/dto/contact'
 
-import { usePropertiesStore } from '@/shared/stores/properties'
+import { useFlatsStore } from '@/shared/stores/flats'
 
 export const useContactsStore = createGlobalState(() => {
   const contacts = shallowRef<Contact[]>([])
 
   const contactsService = useContactsService()
-  const { selectedId } = usePropertiesStore()
-  const { result } = contactsService.getContacts(selectedId)
+  const { buildingId } = useFlatsStore()
+  const { result } = contactsService.getContacts(buildingId)
   whenever(result, result => contacts.value = result.contacts)
 
   return {

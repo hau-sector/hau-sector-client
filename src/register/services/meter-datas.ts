@@ -14,13 +14,13 @@ export const useMeterDatasService = createGlobalState(() => ({
     type: MaybeRefOrGetter<MeterType | undefined>,
     start: MaybeRefOrGetter<Date | undefined>,
     end: MaybeRefOrGetter<Date | undefined>,
-    buildingId: MaybeRefOrGetter<string | undefined>,
+    flatId: MaybeRefOrGetter<string | undefined>,
   ) => useQuery<
     { meterDatas: MeterData[] },
-    { type: MeterType | undefined; start: Date | undefined; end: Date | undefined; buildingId: string | undefined }
+    { type: MeterType | undefined; start: Date | undefined; end: Date | undefined; flatId: string | undefined }
   >(gql`
-      query GetMeterDatas($type: MeterType!, $start: String!, $end: String!, $buildingId: String!) {
-        meterDatas(type: $type, start: $start, end: $end, buildingId: $buildingId) {
+      query GetMeterDatas($type: MeterType!, $start: String!, $end: String!, $flatId: String!) {
+        meterDatas(type: $type, start: $start, end: $end, flatId: $flatId) {
           ...MeterData
         }
       }
@@ -30,21 +30,21 @@ export const useMeterDatasService = createGlobalState(() => ({
     type: toValue(type),
     start: toValue(start),
     end: toValue(end),
-    buildingId: toValue(buildingId),
+    flatId: toValue(flatId),
   }),
   () => ({
-    enabled: Boolean(toValue(type) && toValue(start) && toValue(end) && toValue(buildingId)),
+    enabled: Boolean(toValue(type) && toValue(start) && toValue(end) && toValue(flatId)),
   })),
 
   getCurrentMeterData: (
     type: MaybeRefOrGetter<MeterType | undefined>,
-    buildingId: MaybeRefOrGetter<string | undefined>,
+    flatId: MaybeRefOrGetter<string | undefined>,
   ) => useQuery<
     { currentMeterData: MeterData | undefined },
-    { type: MeterType | undefined; buildingId: string | undefined }
+    { type: MeterType | undefined; flatId: string | undefined }
   >(gql`
-      query GetCurrentMeterData($type: MeterType!, $buildingId: String!) {
-        currentMeterData(type: $type, buildingId: $buildingId) {
+      query GetCurrentMeterData($type: MeterType!, $flatId: String!) {
+        currentMeterData(type: $type, flatId: $flatId) {
           ...MeterData
         }
       }
@@ -52,33 +52,33 @@ export const useMeterDatasService = createGlobalState(() => ({
     `,
   () => ({
     type: toValue(type),
-    buildingId: toValue(buildingId),
+    flatId: toValue(flatId),
   }),
   () => ({
-    enabled: Boolean(toValue(type) && toValue(buildingId)),
+    enabled: Boolean(toValue(type) && toValue(flatId)),
   })),
 
   createCurrentMeterData: () => useMutation<
     { createCurrentMeterData: MeterData },
-    { payload: CreateMeterData; buildingId: string }
+    { payload: CreateMeterData; flatId: string }
   >(
     gql`
-        mutation CreateCurrentMeterData($payload: CreateMeterDataInput!, $buildingId: String!) {
-          createCurrentMeterData(payload: $payload, buildingId: $buildingId) {
-            ...MeterData
-          }
+      mutation CreateCurrentMeterData($payload: CreateMeterDataInput!, $flatId: String!) {
+        createCurrentMeterData(payload: $payload, flatId: $flatId) {
+          ...MeterData
         }
-        ${METER_DATA}
+      }
+      ${METER_DATA}
     `,
   ),
 
   updateCurrentMeterData: () => useMutation<
     { updateCurrentMeterData: MeterData },
-    { payload: UpdateMeterData; buildingId: string }
+    { payload: UpdateMeterData; flatId: string }
   >(
     gql`
-        mutation UpdateCurrentMeterData($payload: UpdateMeterDataInput!, $buildingId: String!) {
-          updateCurrentMeterData(payload: $payload, buildingId: $buildingId) {
+        mutation UpdateCurrentMeterData($payload: UpdateMeterDataInput!, $flatId: String!) {
+          updateCurrentMeterData(payload: $payload, flatId: $flatId) {
             ...MeterData
           }
         }

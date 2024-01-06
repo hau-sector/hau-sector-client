@@ -1,9 +1,10 @@
 import gql from 'graphql-tag'
 
-export interface Property {
+export interface Flat {
   id: string
   flat: number
   building: {
+    id: string
     street: string
     house: string
     __typename: 'BuildingObject'
@@ -11,11 +12,12 @@ export interface Property {
   __typename: 'FlatObject'
 }
 
-export const PROPERTY = gql`
-  fragment Property on FlatObject {
+export const FLAT = gql`
+  fragment Flat on FlatObject {
     id
     flat
     building {
+      id
       street
       house
     }

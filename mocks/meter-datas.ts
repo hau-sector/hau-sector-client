@@ -4,9 +4,9 @@ import { faker } from '@/shared/utils/faker'
 import type { UpdateMeterData } from '@/register/dto/update-meter-data'
 import type { CreateMeterData } from '@/register/dto/create-meter-data'
 import type { MeterData } from '@/register/dto/meter-data'
-import type { MeterType } from '@/register/constants/meter-type'
+import { MeterType } from '@/register/constants/meter-type'
 
-const server = graphql.link(`${import.meta.env.VITE_API_URL}/graphql`)
+const server = graphql.link('http://127.0.0.1:5000/graphql')
 
 export const meterDatasMock = [
   server.query<
@@ -38,7 +38,7 @@ export const meterDatasMock = [
   >('GetCurrentMeterData', (req, res, ctx) => {
     const { type } = req.variables
 
-    const currentMeterData: MeterData | undefined = faker.helpers.maybe(() => ({
+    const currentMeterData: MeterData = {
       id: faker.database.mongodbObjectId(),
       value: 10_000 + faker.number.float({ max: 1000, precision: 0.001 }),
       accepted: true,
@@ -48,9 +48,9 @@ export const meterDatasMock = [
       userId: faker.database.mongodbObjectId(),
       type,
       __typename: 'MeterDataObject',
-    }))
+    }
 
-    return res(ctx.data({ currentMeterData: undefined }))
+    return res(ctx.data({ currentMeterData: type === MeterType.GAS ? currentMeterData : undefined }))
   }),
   server.mutation<
     { createCurrentMeterData: MeterData },

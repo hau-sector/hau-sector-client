@@ -5,7 +5,7 @@ publish = "dist"
 
 [build.environment]
 YARN_VERSION = "1.17.3"
-VITE_API_URL = "http://localhost:5000/api"
+VITE_API_URL = "http://127.0.0.1:8888/api"
 
 [[redirects]]
 from = "/*"
