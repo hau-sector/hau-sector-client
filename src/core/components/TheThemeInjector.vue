@@ -13,6 +13,8 @@ const props = withDefaults(
   },
 )
 
+const style = 'style'
+
 const { duration } = toRefs(props)
 
 const { dark } = useSettingsStore()
@@ -33,7 +35,7 @@ watch(dark, () => {
     :href="DarkTheme"
   >
 
-  <Component is="style" v-if="transition">
+  <Component :is="style" v-if="transition">
     * {
     transition: all {{ duration / 1000 }}s linear 0s !important;
     }

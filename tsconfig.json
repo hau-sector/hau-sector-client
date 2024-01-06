@@ -27,6 +27,6 @@
     "./**/*.ts",
     "./**/*.vue"
   ],
-  "exclude": ["node_modules", "dist", "vue/dist"],
+  "exclude": ["node_modules", "dist", "vue/dist"]
 
 }

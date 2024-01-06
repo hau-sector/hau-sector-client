@@ -35,7 +35,7 @@ export const paymentDatasMock = [
 
     const paymentDatas: PaymentData[] = Array.from(
       { length: faker.number.int({ min: 0, max: 10 }) },
-      (_, i) => ({
+      () => ({
         id: faker.database.mongodbObjectId(),
         value: faker.number.int({ min: 0, max: 10000 }),
         paid: paid ?? false,

@@ -35,7 +35,7 @@ const issuesMap = computed(() =>
         :active-index="0"
       >
         <AccordionTab
-          v-for="(issues, status) of issuesMap"
+          v-for="(issuesOfType, status) of issuesMap"
           :key="status"
           :header="titleMap[status]"
           :pt="{
@@ -44,7 +44,7 @@ const issuesMap = computed(() =>
         >
           <div class="grid grid-cols-1 2xl:grid-cols-3 gap-5 overflow-auto">
             <IssueCard
-              v-for="issue of issues"
+              v-for="issue of issuesOfType"
               :key="issue.id"
               data-test="issue-card"
               :issue="issue"
