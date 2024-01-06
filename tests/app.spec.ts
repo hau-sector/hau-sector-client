@@ -1,7 +1,7 @@
 import PrimeVue from 'primevue/config'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { VueWrapper } from '@vue/test-utils'
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { h, ref } from 'vue'
@@ -12,15 +12,6 @@ import { RouteName } from '@/shared/constants/route-name'
 vi.mock('@/shared/stores/flats', () => ({
   useFlatsStore: () => ({
     flatId: ref('1'),
-  }),
-}))
-vi.mock('@/shared/stores/user', () => ({
-  useUserStore: () => ({
-    user: ref({
-      firstName: 'ifj3f',
-      lastName: 'isjefj',
-      middleName: 'jsefj',
-    }),
   }),
 }))
 
@@ -40,7 +31,7 @@ describe('App', () => {
   let wrapper: VueWrapper<any>
 
   beforeEach(async () => {
-    wrapper = mount(App, {
+    wrapper = shallowMount(App, {
       global: { plugins: [router, [PrimeVue, primeVueConfig]] },
     })
     await router.isReady()
