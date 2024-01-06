@@ -12,7 +12,7 @@ vi.mock('@/chat/services/messages', () => ({
 }))
 
 vi.mock('@/shared/stores/flats', () => ({
-  useFlats: () => ({
+  useFlatsStore: () => ({
     buildingId: ref(''),
   }),
 }))
