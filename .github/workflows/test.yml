@@ -34,7 +34,7 @@ jobs:
       - name: Run e2e tests
         uses: cypress-io/github-action@v5
         with:
-          command: yarn test:e2e
+          start: vite --port 8099 --mode test
 
       - name: Run build
         run: yarn build
