@@ -2,12 +2,12 @@ import { shallowRef } from '@vue/reactivity'
 import { createGlobalState, whenever } from '@vueuse/core'
 import { shallowReadonly } from 'vue'
 import { useContactsService } from '@/chat/services/contacts'
-import type { Contact } from '@/chat/dto/contact'
 
 import { useFlatsStore } from '@/shared/stores/flats'
+import type { User } from '@/shared/dto/user'
 
 export const useContactsStore = createGlobalState(() => {
-  const contacts = shallowRef<Contact[]>([])
+  const contacts = shallowRef<User[]>([])
 
   const contactsService = useContactsService()
   const { buildingId } = useFlatsStore()

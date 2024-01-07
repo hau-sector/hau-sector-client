@@ -1,13 +1,13 @@
 import gql from 'graphql-tag'
-import { CONTACT } from '@/chat/dto/contact'
-import type { Contact } from '@/chat/dto/contact'
+import type { User } from '@/shared/dto/user'
+import { USER } from '@/shared/dto/user'
 
 export interface Message {
   id: string
   text: string
   mine: boolean
   time: string
-  sender: Contact
+  sender: User
   __typename: 'MessageObject'
 }
 
@@ -18,8 +18,8 @@ export const MESSAGE = gql`
       mine
       time
       sender {
-        ...Contact
+        ...User
       }
     }
-    ${CONTACT}
+    ${USER}
 `

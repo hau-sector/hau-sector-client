@@ -43,12 +43,8 @@ const credit = computed(() => accountAmount.value < 0)
 const { messages } = useMessagesStore()
 const lastMessages = computed(() => messages.value.slice(-2))
 
-const state = reactive({
-  text: '',
-})
-const rules = {
-  text: { required },
-}
+const state = reactive({ text: '' })
+const rules = { text: { required } }
 let $v = useVuelidate(rules, state)
 tryOnMounted(() => $v = useVuelidate(rules, state))
 
@@ -157,7 +153,7 @@ const { dark } = useSettingsStore()
                   :disabled="$v.$invalid"
                   @click="submit"
                 >
-                  <i class="pi bi-arrow-return-right" />
+                  <i class="bi-arrow-return-right" />
                 </Button>
               </div>
             </div>
@@ -171,7 +167,7 @@ const { dark } = useSettingsStore()
           <div class="flex gap-5 flex-col xl:flex-row">
             <router-link
               v-for="meta of meterRegistratorMetas"
-              :key="meta" data-test="home-meter"
+              :key="meta.type" data-test="home-meter"
               :to="{ name: RouteName.REGISTER }"
               class="flex flex-1 text-inherit no-underline transition cursor-pointer hover:shadow-lg"
               :class="dark ? 'hover:shadow-black' : [meta.shadow]"
@@ -188,7 +184,7 @@ const { dark } = useSettingsStore()
         </span>
         <router-link
           v-for="vote of actualVotes"
-          :key="vote" data-test="home-votes"
+          :key="vote.id" data-test="home-votes"
           :to="{ name: RouteName.VOTES }"
           class="panel flex flex-col gap-2 px-6 py-4 text-inherit  no-underline transition cursor-pointer hover:shadow-lg"
           :class="dark ? 'hover:shadow-black' : 'hover:shadow-indigo-100'"
@@ -205,7 +201,7 @@ const { dark } = useSettingsStore()
         </span>
         <router-link
           v-for="item of actualNews"
-          :key="item"
+          :key="item.id"
           data-test="home-news"
           :to="{ name: RouteName.NEWS }"
           class="panel flex items-center h-16 gap-6 text-inherit no-underline transition cursor-pointer hover:shadow-lg"
@@ -222,7 +218,7 @@ const { dark } = useSettingsStore()
         </span>
         <router-link
           v-for="issue of actualIssues"
-          :key="issue" data-test="home-issues"
+          :key="issue.id" data-test="home-issues"
           :to="{ name: RouteName.ISSUES }"
           class="panel flex flex-col flex-auto gap-2 px-6 py-4 justify-center text-inherit no-underline transition cursor-pointer hover:shadow-lg"
           :class="dark ? 'hover:shadow-black' : 'hover:shadow-indigo-100'"

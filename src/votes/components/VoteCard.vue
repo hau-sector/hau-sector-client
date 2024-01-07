@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { shallowRef } from '@vue/reactivity'
-import { syncRefs, tryOnMounted } from '@vueuse/core'
 import type { ChartData } from 'chart.js'
 import moment from 'moment'
 import Button from 'primevue/button'
@@ -8,38 +6,38 @@ import Chart from 'primevue/chart'
 import RadioButton from 'primevue/radiobutton'
 import { computed, ref, toRef } from 'vue'
 import { useToast } from 'primevue/usetoast'
-import Toast from 'primevue/toast'
 import type { Vote } from '@/votes/dto/vote'
 import { VoteStatus } from '@/votes/constants/vote-status'
 import { VoteAnswer } from '@/votes/constants/vote-answer'
-import { faker } from '@/shared/utils/faker'
+import { useVotesStore } from '@/votes/stores/votes'
+import TransitionFade from '@/shared/components/TransitionFade.vue'
 
 const props = defineProps<{
   vote: Vote
 }>()
-const votes = toRef(props, 'vote')
-
-const answer = shallowRef<VoteAnswer>()
-syncRefs(() => props.vote.answer, answer)
+const vote = toRef(props, 'vote')
 
 const metas: Record<VoteStatus, { label: string; textColor: string; icon: string }> = {
-  [VoteStatus.NEW]: { label: 'Опубликовано', textColor: 'text-emerald-500', icon: 'pi bi-eye' },
-  [VoteStatus.COMPLETED]: { label: 'Завершено', textColor: 'text-red-500', icon: 'pi bi-check-all' },
+  [VoteStatus.NEW]: { label: 'Опубликовано', textColor: 'text-emerald-500', icon: 'bi-eye' },
+  [VoteStatus.COMPLETED]: { label: 'Завершено', textColor: 'text-red-500', icon: 'bi-check-all' },
 }
 const meta = computed(() => metas[props.vote.status])
 
-const selectedCategory = ref<VoteAnswer>()
-const categories = ref([
-  { name: VoteAnswer.AGREE, key: 'AGREE', label: 'За' },
-  { name: VoteAnswer.DISAGREE, key: 'DISAGREE', label: 'Против' },
-  { name: VoteAnswer.AVOID, key: 'AVOID', label: 'Воздержаться' },
-])
+const selectedAnswer = ref<VoteAnswer>()
+const answerLabelMapping: Record<VoteAnswer, string> = {
+  [VoteAnswer.AGREE]: 'За',
+  [VoteAnswer.DISAGREE]: 'Против',
+  [VoteAnswer.AVOID]: 'Воздержаться',
+}
 
-const date = computed(() => moment(votes.value.publishedAt).format('DD MMMM'))
+const date = computed(() => moment(vote.value.publishedAt).format('DD MMMM'))
 
+const { setAnswer } = useVotesStore()
 const toast = useToast()
-function submit() {
-  answer.value = selectedCategory.value
+async function submit() {
+  if (selectedAnswer.value)
+    await setAnswer(props.vote.id, selectedAnswer.value)
+
   if (props.vote.answer) {
     toast.add({
       severity: 'success',
@@ -50,22 +48,18 @@ function submit() {
   }
 }
 
-const chartData = shallowRef<ChartData>()
-function updateChartData() {
-  chartData.value = {
-    labels: categories.value.map(item => item.label),
-    datasets: [
-      {
-        label: 'Результаты',
-        data: Array.from({ length: 3 }, () => faker.number.int({ min: 0, max: 100 })),
-        backgroundColor: ['rgba(185, 206, 128, 0.2)', 'rgba(250, 158, 158, 0.2)', 'rgba(154, 209, 229, 0.2)'],
-        borderColor: ['rgb(185, 206, 128)', 'rgb(250, 158, 158)', 'rgb(154, 209, 229)'],
-        borderWidth: 1,
-      },
-    ],
-  }
-}
-tryOnMounted(updateChartData)
+const chartData = computed<ChartData>(() => ({
+  labels: Object.values(answerLabelMapping),
+  datasets: [
+    {
+      label: 'Результаты',
+      data: [props.vote.result.agree, props.vote.result.disagree, props.vote.result.avoid],
+      backgroundColor: ['rgba(185, 206, 128, 0.2)', 'rgba(250, 158, 158, 0.2)', 'rgba(154, 209, 229, 0.2)'],
+      borderColor: ['rgb(185, 206, 128)', 'rgb(250, 158, 158)', 'rgb(154, 209, 229)'],
+      borderWidth: 1,
+    },
+  ],
+}))
 </script>
 
 <template>
@@ -85,17 +79,34 @@ tryOnMounted(updateChartData)
     </div>
     <div> {{ vote.content }} </div>
 
-    <div v-if="!answer" class="flex justify-around items-center mt-auto">
-      <div v-for="category in categories" :key="category.key" class="flex gap-2">
-        <RadioButton v-model="selectedCategory" data-test="vote-card-radiobutton" :input-id="category.key" :value="category.key" />
-        <label :for="category.key">{{ category.label }}</label>
+    <TransitionFade>
+      <div
+        v-if="!props.vote.answer"
+        class="flex justify-around items-center mt-auto"
+      >
+        <div
+          v-for="(label, answer) in answerLabelMapping" :key="answer"
+          class="flex gap-2"
+        >
+          <RadioButton
+            v-model="selectedAnswer"
+            data-test="vote-card-radiobutton"
+            :value="answer"
+          />
+          <label>{{ label }}</label>
+        </div>
+        <Button
+          data-test="vote-card-button" :disabled="!selectedAnswer"
+          label="Проголосовать" severity="success" @click="submit()"
+        />
       </div>
-      <Toast />
-      <Button data-test="vote-card-button" :disabled="!selectedCategory" label="Проголосовать" severity="success" @click="submit()" />
-    </div>
 
-    <div v-else>
-      <Chart type="bar" data-test="vote-card-chart" :data="chartData" :options="{ responsive: true, maintainAspectRatio: false }" />
-    </div>
+      <div v-else>
+        <Chart
+          type="bar" data-test="vote-card-chart" :data="chartData"
+          :options="{ responsive: true, maintainAspectRatio: false }"
+        />
+      </div>
+    </TransitionFade>
   </div>
 </template>

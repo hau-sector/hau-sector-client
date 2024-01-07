@@ -6,6 +6,7 @@ export interface User {
   lastName: string
   middleName: string
   avatar: string
+  online: boolean
   __typename: 'UserObject'
 }
 
@@ -16,5 +17,6 @@ export const USER = gql`
     lastName
     middleName
     avatar
+    online
   }
 `

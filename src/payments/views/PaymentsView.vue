@@ -6,9 +6,9 @@ import Receipt from '@/payments/components/Receipt.vue'
 
 <template>
   <div class="flex flex-col gap-10 xl:flex-row">
-    <div class="flex flex-col flex-1 gap-4">
-      <Balance class="" />
-      <Receipt class="" />
+    <div class="flex-1 flex flex-col gap-4">
+      <Balance />
+      <Receipt class="flex-1" />
     </div>
     <PaymentsHistory class="flex-1" />
   </div>

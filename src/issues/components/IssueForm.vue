@@ -31,7 +31,7 @@ async function submit() {
 
 <template>
   <div class="panel p-3 flex flex-col gap-3">
-    <TitledComponent data-test="issue-form" mini title="Новая заявка" icon="pi bi-building-add">
+    <TitledComponent data-test="issue-form" mini title="Новая заявка" icon="bi-building-add">
       <span class="p-float-label mt-5">
         <InputText
           v-model="$v.title.$model"

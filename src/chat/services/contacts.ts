@@ -3,22 +3,22 @@ import { createGlobalState } from '@vueuse/core'
 import gql from 'graphql-tag'
 import type { MaybeRefOrGetter } from 'vue'
 import { toValue } from 'vue'
-import type { Contact } from '@/chat/dto/contact'
-import { CONTACT } from '@/chat/dto/contact'
+import type { User } from '@/shared/dto/user'
+import { USER } from '@/shared/dto/user'
 
 export const useContactsService = createGlobalState(() => ({
   getContacts: (
     buildingId: MaybeRefOrGetter<string | undefined>,
   ) => useQuery<
-    { contacts: Contact[] },
+    { contacts: User[] },
     { buildingId: string | undefined }
   >(gql`
     query GetContacts($buildingId: String!) {
       contacts(buildingId: $buildingId) {
-        ...Contact
+        ...User
       }
     }
-    ${CONTACT}
+    ${USER}
   `,
   () => ({
     buildingId: toValue(buildingId),

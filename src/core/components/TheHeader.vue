@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import Toolbar from 'primevue/toolbar'
+import Button from 'primevue/button'
 import { computed } from 'vue'
 import PropertySelect from '@/shared/components/PropertySelect.vue'
 import { useUserStore } from '@/shared/stores/user'
+import { useAuthStore } from '@/core/stores/auth'
 
 const { user } = useUserStore()
 const name = computed(() => {
@@ -16,6 +18,8 @@ const name = computed(() => {
   } = user.value
   return `${lastName} ${f}. ${m}.`
 })
+
+const { logout } = useAuthStore()
 </script>
 
 <template>
@@ -33,7 +37,11 @@ const name = computed(() => {
     </template>
 
     <template #end>
-      <PropertySelect data-test="header-property-select" />
+      <div class="flex gap-2">
+        <PropertySelect data-test="header-property-select" />
+
+        <Button icon="bi-box-arrow-right" severity="danger" text @click="logout" />
+      </div>
     </template>
   </Toolbar>
 </template>

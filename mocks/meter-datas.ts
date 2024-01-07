@@ -34,7 +34,7 @@ export const meterDatasMock = [
   }),
   server.query<
     { currentMeterData: MeterData | undefined },
-    { type: MeterType; buildingId: string }
+    { type: MeterType; flatId: string }
   >('GetCurrentMeterData', (req, res, ctx) => {
     const { type } = req.variables
 

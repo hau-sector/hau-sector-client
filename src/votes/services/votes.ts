@@ -1,10 +1,11 @@
-import { useQuery } from '@vue/apollo-composable'
+import { useMutation, useQuery } from '@vue/apollo-composable'
 import { createGlobalState } from '@vueuse/core'
 import gql from 'graphql-tag'
-import { toValue } from 'vue'
 import type { MaybeRefOrGetter } from 'vue'
-import { VOTE } from '@/votes/dto/vote'
+import { toValue } from 'vue'
 import type { Vote } from '@/votes/dto/vote'
+import { VOTE } from '@/votes/dto/vote'
+import type { VoteAnswer } from '@/votes/constants/vote-answer'
 
 export const useVotesService = createGlobalState(() => ({
   getVotes: (
@@ -26,4 +27,18 @@ export const useVotesService = createGlobalState(() => ({
   () => ({
     enabled: Boolean(toValue(buildingId)),
   })),
+
+  setAnswer: () => useMutation<
+    { setAnswer: Vote },
+    { voteId: string; answer: VoteAnswer }
+  >(
+    gql`
+      mutation SetVoteAnswer($voteId: String!, $answer: VoteAnswer!) {
+        setAnswer(voteId: $voteId, answer: $answer) {
+          ...Vote
+        }
+      }
+      ${VOTE}
+    `,
+  ),
 }))

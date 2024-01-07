@@ -7,7 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col overflow-auto">
     <div
       :class="props.mini ? 'my-3' : 'my-10'"
       class="flex gap-5 items-center justify-center"

@@ -1,4 +1,5 @@
 import { graphql } from 'msw'
+import { faker } from '@faker-js/faker/locale/ru'
 import { VoteAnswer } from '@/votes/constants/vote-answer'
 import { VoteStatus } from '@/votes/constants/vote-status'
 import type { Vote } from '@/votes/dto/vote'
@@ -173,9 +174,42 @@ export const votesMock = [
       },
     ].map(item => ({
       ...item,
+      result: {
+        voteId: item.id,
+        agree: faker.number.int({ max: 20 }),
+        disagree: faker.number.int({ max: 20 }),
+        avoid: faker.number.int({ max: 20 }),
+        __typename: 'VoteResultObject',
+      },
       __typename: 'VoteObject',
     }))
 
     return res(ctx.data({ votes }))
+  }),
+
+  server.mutation<
+    { setAnswer: Vote },
+    { voteId: string; answer: VoteAnswer }
+  >('SetVoteAnswer', (req, res, ctx) => {
+    const { answer } = req.variables
+
+    const setAnswer: Vote = {
+      id: '1',
+      title: 'Распределение бюджета на благоустройство',
+      content: 'Планируется распределить бюджет на благоустройство территории. Обсудите, на какие проекты стоит потратить средства.',
+      status: VoteStatus.NEW,
+      publishedAt: '2023-09-05T10:00:00Z',
+      answer,
+      result: {
+        voteId: '1',
+        agree: faker.number.int({ max: 20 }),
+        disagree: faker.number.int({ max: 20 }),
+        avoid: faker.number.int({ max: 20 }),
+        __typename: 'VoteResultObject',
+      },
+      __typename: 'VoteObject',
+    }
+
+    return res(ctx.data({ setAnswer }))
   }),
 ]

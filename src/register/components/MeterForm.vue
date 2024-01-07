@@ -7,7 +7,7 @@ const types: MeterType[] = [MeterType.ENERGY, MeterType.WATER, MeterType.GAS]
 </script>
 
 <template>
-  <TitledComponent title="Ввод показаний" icon="pi bi-pen">
+  <TitledComponent title="Ввод показаний" icon="bi-pen">
     <div class="flex flex-col gap-5">
       <MeterRegistrator v-for="type of types" :key="type" :type="type" />
     </div>

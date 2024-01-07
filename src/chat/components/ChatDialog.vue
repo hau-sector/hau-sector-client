@@ -57,7 +57,7 @@ tryOnMounted(scrollDown)
         @keydown.exact.enter.prevent="submit"
       />
       <Button data-test="chat-button" text severity="secondary" class="flex justify-center" :disabled="$v.$invalid" @click="submit">
-        <i class="pi bi-arrow-return-right text-3xl" />
+        <i class="bi-arrow-return-right text-3xl" />
       </Button>
     </div>
   </div>

@@ -11,10 +11,11 @@ import Chart from 'primevue/chart'
 import type { MenuItem } from 'primevue/menuitem'
 import SelectButton from 'primevue/selectbutton'
 import { computed, ref, watch } from 'vue'
-import { capCase } from '../../shared/utils/case'
+import { capCase } from '@/shared/utils/case'
 import { useMeterDatasStore } from '@/register/stores/meter-datas'
 import TitledComponent from '@/shared/components/TitledComponent.vue'
 import { MeterType } from '@/register/constants/meter-type'
+import type { MeterData } from '@/register/dto/meter-data'
 
 interface PeriodOption {
   label: string
@@ -38,9 +39,9 @@ whenever(
 )
 
 const items: (MenuItem & { type: MeterType; color: string; border: string })[] = [
-  { label: 'Электричество', icon: 'pi bi-lightning', type: MeterType.ENERGY, color: 'text-yellow-500', border: 'border-amber-500' },
-  { label: 'Вода', icon: 'pi bi-droplet', type: MeterType.WATER, color: 'text-blue-500', border: 'border-sky-500' },
-  { label: 'Газ', icon: 'pi bi-fire', type: MeterType.GAS, color: 'text-red-500', border: 'border-red-500' },
+  { label: 'Электричество', icon: 'bi-lightning', type: MeterType.ENERGY, color: 'text-yellow-500', border: 'border-amber-500' },
+  { label: 'Вода', icon: 'bi-droplet', type: MeterType.WATER, color: 'text-blue-500', border: 'border-sky-500' },
+  { label: 'Газ', icon: 'bi-fire', type: MeterType.GAS, color: 'text-red-500', border: 'border-red-500' },
 ]
 const active = ref(0)
 const activeType = computed(() => items[active.value]?.type)
@@ -51,7 +52,7 @@ syncRefs(activeType, type)
 syncRefs(() => range.value[0], start)
 syncRefs(() => range.value[1], end)
 
-function extractMonth(value: Date) {
+function extractMonth(value: string) {
   return capCase(moment(value).format('MMMM'))
 }
 
@@ -83,8 +84,8 @@ watch([meterDatas], updateChartData)
 </script>
 
 <template>
-  <TitledComponent title="История" icon="pi bi-calendar3">
-    <div class="flex flex-col gap-5">
+  <TitledComponent title="История" icon="bi-calendar3">
+    <div class="flex-1 flex flex-col gap-5 overflow-auto">
       <div class="flex gap-10 justify-center">
         <SelectButton
           v-model="period"
@@ -109,7 +110,7 @@ watch([meterDatas], updateChartData)
         sort-field="enteredAt"
         :sort-order="-1"
         :loading="loading"
-        class="panel h-[40rem] xl:h-[calc(100vh-19rem)]"
+        class="panel"
         :value="meterDatas"
         data-test="meter-history-table"
       >
@@ -136,13 +137,13 @@ watch([meterDatas], updateChartData)
         </template>
 
         <Column sortable header="Дата" field="enteredAt">
-          <template #body="{ data }">
+          <template #body="{ data }: {data: MeterData}">
             {{ moment(data.enteredAt).format('DD.MM.YYYY') }}
           </template>
         </Column>
         <Column header="Показание" field="value" />
         <Column header="Период" field="value">
-          <template #body="{ data }">
+          <template #body="{ data }: {data: MeterData}">
             {{ extractMonth(data.enteredAt) }}
           </template>
         </Column>

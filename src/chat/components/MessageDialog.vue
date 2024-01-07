@@ -8,7 +8,7 @@ const props = defineProps<{
   message: Message
 }>()
 const { dark } = useSettingsStore()
-const time = computed(() => `${moment(props.message.time).hour()}:${moment(props.message.time).minute()}`)
+const time = computed(() => moment(props.message.time).format('HH:mm'))
 </script>
 
 <template>
@@ -20,10 +20,11 @@ const time = computed(() => `${moment(props.message.time).hour()}:${moment(props
       >
       <i
         v-if="!props.message.mine"
-        class="pi bi-circle-fill text-xs absolute left-7 top-5 drop-shadow-md"
+        class="bi-circle-fill text-xs absolute left-7 top-5 drop-shadow-md"
         :class="props.message.sender.online ? 'text-emerald-400' : 'text-rose-500'"
       />
     </div>
+
     <div
       :class="[
         message.mine ? 'bg-emerald-100' : 'bg-white',
@@ -32,11 +33,9 @@ const time = computed(() => `${moment(props.message.time).hour()}:${moment(props
       class="panel flex flex-col items-end justify-between px-4 py-2 max-w-[30rem] xl:max-w-[50rem] rounded-xl"
     >
       <span class="break-words">{{ props.message.text }}</span>
-      <div
-        class="self-end text-slate-400"
-      >
+      <div class="self-end text-slate-400">
         <span v-if="!props.message.mine">
-          {{ props.message.sender.name }} {{ props.message.sender.surname }},
+          {{ props.message.sender.firstName }} {{ props.message.sender.lastName }},
         </span>
         <span>{{ time }}</span>
       </div>

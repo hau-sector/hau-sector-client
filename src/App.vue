@@ -1,10 +1,16 @@
 <script lang="ts" setup>
-import { tryOnMounted } from '@vueuse/core'
+import { tryOnMounted, whenever } from '@vueuse/core'
 import { useRouter } from 'vue-router'
+import Toast from 'primevue/toast'
 import TheThemeInjector from '@/core/components/TheThemeInjector.vue'
 import TheSideMenu from '@/core/components/TheSideMenu.vue'
 import TheHeader from '@/core/components/TheHeader.vue'
 import { useFlatsStore } from '@/shared/stores/flats'
+import TransitionFade from '@/shared/components/TransitionFade.vue'
+import { useAuthStore } from '@/core/stores/auth'
+
+const { isLoading, isAuthenticated, loginWithRedirect } = useAuthStore()
+whenever(() => !isLoading.value && !isAuthenticated.value, () => loginWithRedirect())
 
 const router = useRouter()
 async function preload() {
@@ -20,29 +26,26 @@ const { flatId } = useFlatsStore()
 </script>
 
 <template>
+  <Toast />
   <TheThemeInjector />
 
-  <div class="w-full h-full bg-ground flex flex-col px-3 2xl:px-5">
+  <div class="w-full h-full bg-ground flex flex-col px-3 2xl:px-5 overflow-auto">
     <TheHeader class="mb-3 shrink-0 2xl:mb-5" />
 
-    <div v-if="flatId" class="flex flex-1 gap-1 mb-3 2xl:mb-5 2xl:gap-4">
-      <TheSideMenu />
+    <TransitionFade>
+      <div v-if="flatId" class="flex flex-1 gap-1 mb-3 2xl:mb-5 2xl:gap-4 overflow-auto">
+        <TheSideMenu />
 
-      <RouterView v-slot="{ Component }">
-        <transition
-          mode="out-in"
-          enter-from-class="opacity-0"
-          leave-to-class="opacity-0"
-          enter-active-class="duration-200 ease-out"
-          leave-active-class="duration-100 ease-in"
-        >
-          <component :is="Component" class="flex-1 px-2 h-[calc(100vh-6rem)]  2xl:h-[calc(100vh-7rem)] overflow-auto" />
-        </transition>
-      </RouterView>
-    </div>
+        <RouterView v-slot="{ Component }">
+          <TransitionFade>
+            <component :is="Component" class="flex-1 px-2 overflow-auto" />
+          </TransitionFade>
+        </RouterView>
+      </div>
 
-    <div v-else class="m-auto flex flex-col gap-5">
-      <span class="text-xl">Для начала работы выберите объект собственности</span>
-    </div>
+      <div v-else class="m-auto flex flex-col gap-5">
+        <span class="text-xl">Для начала работы выберите объект собственности</span>
+      </div>
+    </TransitionFade>
   </div>
 </template>

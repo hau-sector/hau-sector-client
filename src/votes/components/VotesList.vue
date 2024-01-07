@@ -10,7 +10,7 @@ const { votes } = useVotesStore()
   <TitledComponent
     data-test="votes-list"
     title="Голосования"
-    icon="pi bi-bar-chart"
+    icon="bi-bar-chart"
   >
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-5">
       <VoteCard

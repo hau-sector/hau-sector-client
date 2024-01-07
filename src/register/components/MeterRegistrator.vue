@@ -13,13 +13,13 @@ import { MeterType } from '@/register/constants/meter-type'
 
 const props = defineProps<{
   type: MeterType
-  mini: boolean
+  mini?: boolean
 }>()
 
 const metas: Record<MeterType, { label: string; icon: string; color: string }> = {
-  [MeterType.ENERGY]: { label: 'Электричество', icon: 'pi bi-lightning', color: 'before:bg-amber-400' },
-  [MeterType.WATER]: { label: 'Вода', icon: 'pi bi-droplet', color: 'before:bg-sky-400' },
-  [MeterType.GAS]: { label: 'Газ', icon: 'pi bi-fire', color: 'before:bg-red-400' },
+  [MeterType.ENERGY]: { label: 'Электричество', icon: 'bi-lightning', color: 'before:bg-amber-400' },
+  [MeterType.WATER]: { label: 'Вода', icon: 'bi-droplet', color: 'before:bg-sky-400' },
+  [MeterType.GAS]: { label: 'Газ', icon: 'bi-fire', color: 'before:bg-red-400' },
 }
 
 const meta = computed(() => metas[props.type])

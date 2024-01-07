@@ -26,7 +26,7 @@ const visible = ref<Boolean>(false)
 </script>
 
 <template>
-  <TitledComponent title="Баланс" icon="pi bi-piggy-bank">
+  <TitledComponent title="Баланс" icon="bi-piggy-bank">
     <div
       class="
     panel flex flex-col gap-16 pt-10 pb-5 px-16 overflow-hidden relative

@@ -1,16 +1,16 @@
 import gql from 'graphql-tag'
 
 export interface VoteResult {
-  id: string
-  agree: string
-  disagree: string
-  avoid: string
+  voteId: string
+  agree: number
+  disagree: number
+  avoid: number
   __typename: 'VoteResultObject'
 }
 
 export const VOTE_RESULT = gql`
     fragment VoteResult on VoteResultObject {
-      id
+      voteId
       agree
       disagree
       avoid
