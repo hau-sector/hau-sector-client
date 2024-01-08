@@ -1,4 +1,4 @@
-# Vue 3 modular template
+# Hau Sector Client
 
 <div align="center">
 
