@@ -16,10 +16,10 @@ export default defineConfig({
   server: {
     watch: {
       ignored: [
-        'coverage/**/*',
-        'dist/**/*',
-        'cypress/**/*',
-        'tests/**/*',
+        '**/coverage/**/*',
+        '**/dist/**/*',
+        '**/cypress/**/*',
+        '**/tests/**/*',
       ],
     },
   },
