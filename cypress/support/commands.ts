@@ -1,6 +1,6 @@
 const commands = {
   selectProperty() {
-    cy.wait(500)
+    cy.wait(100)
     cy.get('[data-test="header-property-select"]').click()
     cy.get('li.p-dropdown-item').first().click()
   },
