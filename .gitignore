@@ -4,6 +4,7 @@
 /electron/*.js
 /s3
 /cypress/screenshots
+/cypress/downloads
 
 # Environment
 /.env*.local
