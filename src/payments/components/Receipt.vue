@@ -30,7 +30,7 @@ const dialogData = shallowRef<PaymentData>()
       scrollable
       scroll-height="flex"
       :value="unpaidPaymentDatas"
-      class="panel flex-1 h-[19rem]"
+      class="panel flex-1"
     >
       <Column field="value" header="Сумма">
         <template #body="{ data }: {data: PaymentData}">

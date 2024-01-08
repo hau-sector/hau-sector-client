@@ -1,6 +1,4 @@
 import './commands'
 import { startMock } from '../../mocks'
 
-Cypress.on('test:before:run:async', async () => {
-  await startMock('http://localhost:8099')
-})
+Cypress.on('test:before:run:async', async () => startMock('http://localhost:8099'))

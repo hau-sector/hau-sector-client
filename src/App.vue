@@ -7,10 +7,12 @@ import TheSideMenu from '@/core/components/TheSideMenu.vue'
 import TheHeader from '@/core/components/TheHeader.vue'
 import { useFlatsStore } from '@/shared/stores/flats'
 import TransitionFade from '@/shared/components/TransitionFade.vue'
-import { useAuthStore } from '@/core/stores/auth'
+import { useAuthStore } from '@/shared/stores/auth'
 
-const { isLoading, isAuthenticated, loginWithRedirect } = useAuthStore()
-whenever(() => !isLoading.value && !isAuthenticated.value, () => loginWithRedirect())
+if (!window.Cypress) {
+  const { isLoading, isAuthenticated, loginWithRedirect } = useAuthStore()
+  whenever(() => !isLoading.value && !isAuthenticated.value, () => loginWithRedirect())
+}
 
 const router = useRouter()
 async function preload() {

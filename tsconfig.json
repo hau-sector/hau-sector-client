@@ -17,7 +17,7 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "allowJs": true,
-    "types": ["webpack-env", "vite/client"],
+    "types": ["webpack-env", "vite/client", "cypress"],
     "paths": {
       "@/*": ["src/*"]
     },

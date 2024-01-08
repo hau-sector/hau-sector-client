@@ -1,10 +1,13 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
-import { useAuthStore } from '@/core/stores/auth'
+import { useAuthStore } from '@/shared/stores/auth'
 
 const url = import.meta.env.PROD ? location.origin : import.meta.env.VITE_API_URL
 const httpLink = createHttpLink({
   uri: `${url}/graphql`,
   fetch: async (uri, options) => {
+    if (window.Cypress)
+      return fetch(uri, options)
+
     const { getAccessTokenSilently } = useAuthStore()
 
     options = {

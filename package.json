@@ -10,7 +10,7 @@
     "lint": "eslint . --fix",
     "test:unit": "vitest run --coverage",
     "test:unit:watch": "vitest watch",
-    "test:e2e": "concurrently --kill-others \"vite --port 8099 --mode test\" \"cypress run\"",
+    "test:e2e": "concurrently --kill-others \"vite --port 8099 --mode test\" \"cypress run -b chrome\"",
     "test:e2e:watch": "concurrently --kill-others \"vite --port 8099 --mode test\" \"cypress open --e2e -b chrome\""
   },
   "dependencies": {

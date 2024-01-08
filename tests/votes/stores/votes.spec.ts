@@ -6,6 +6,7 @@ const resultMock = ref()
 vi.mock('@/votes/services/votes', () => ({
   useVotesService: () => ({
     getVotes: () => ({ result: resultMock }),
+    setAnswer: () => ({}),
   }),
 }))
 

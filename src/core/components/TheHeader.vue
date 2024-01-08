@@ -4,7 +4,7 @@ import Button from 'primevue/button'
 import { computed } from 'vue'
 import PropertySelect from '@/shared/components/PropertySelect.vue'
 import { useUserStore } from '@/shared/stores/user'
-import { useAuthStore } from '@/core/stores/auth'
+import { useAuthStore } from '@/shared/stores/auth'
 
 const { user } = useUserStore()
 const name = computed(() => {

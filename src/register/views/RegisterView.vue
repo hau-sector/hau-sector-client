@@ -5,7 +5,7 @@ import MeterHistory from '@/register/components/MeterHistory.vue'
 
 <template>
   <div data-test="register-view" class="flex flex-col gap-10 xl:flex-row">
-    <MeterForm class="xl:flex-1" />
-    <MeterHistory class="xl:flex-1" />
+    <MeterForm class="flex-1 shrink-0" />
+    <MeterHistory class="flex-1 shrink-0" />
   </div>
 </template>

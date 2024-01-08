@@ -6,5 +6,7 @@ export default defineConfig({
     baseUrl: 'http://localhost:8099',
     defaultCommandTimeout: 10000,
     chromeWebSecurity: false,
+    viewportWidth: 1700,
+    viewportHeight: 1000,
   },
 })

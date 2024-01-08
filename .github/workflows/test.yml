@@ -35,6 +35,7 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           start: npx vite --port 8099 --mode test
+          browser: chrome
 
       - name: Run build
         run: yarn build

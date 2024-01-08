@@ -4,7 +4,7 @@ export interface PaymentData {
   id: string
   value: number
   paid: boolean
-  paidAt?: string
+  paidAt: string
   userId: string
   __typename: 'PaymentDataObject'
 }

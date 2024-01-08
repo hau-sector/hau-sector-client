@@ -1,7 +1,7 @@
 describe('Заявки на ТО', () => {
   beforeEach(() => {
     cy.visit('/issues')
-    cy.wait(100)
+    cy.selectProperty()
   })
 
   it('Пользователь может создать заявку на техническое обслуживание', () => {

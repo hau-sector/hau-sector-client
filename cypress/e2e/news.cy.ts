@@ -1,7 +1,7 @@
 describe('Новости', () => {
   beforeEach(() => {
     cy.visit('/news')
-    cy.wait(100)
+    cy.selectProperty()
   })
 
   it('Пользователю доступен список новостей', () => {

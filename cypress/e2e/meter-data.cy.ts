@@ -1,8 +1,7 @@
 describe('Внесение данных счетчиков', () => {
   beforeEach(() => {
     cy.visit('/register')
-    cy.get('[data-test="meter-input"]')
-    cy.wait(100)
+    cy.selectProperty()
   })
 
   it('Пользователь вносит данные о потреблении ресурсов через интерфейс приложения',
@@ -14,8 +13,6 @@ describe('Внесение данных счетчиков', () => {
       cy.get('[data-test="meter-button"').first()
         .should('exist').and('be.visible')
         .click()
-
-      cy.wait(100)
 
       cy.get('[data-test="meter-button-label"').first()
         .should('contain.text', 'Изменить')
@@ -31,8 +28,6 @@ describe('Внесение данных счетчиков', () => {
         .should('exist').and('be.visible')
         .click()
 
-      cy.wait(100)
-
       cy.get('[data-test="meter-button-label"').first()
         .should('contain.text', 'Изменить')
 
@@ -41,8 +36,6 @@ describe('Внесение данных счетчиков', () => {
 
       cy.get('[data-test="meter-button"').first()
         .click()
-
-      cy.wait(100)
 
       cy.get('[data-test="meter-input-value"]').first()
         .should('contain.value', '111')
@@ -70,8 +63,6 @@ describe('Внесение данных счетчиков', () => {
       cy.get('[data-test="meter-history-select-button"]')
         .last()
         .click()
-
-      cy.wait(100)
 
       cy.get('[data-test="meter-history-select-button"][data-p-highlight="true"]')
         .should('exist')

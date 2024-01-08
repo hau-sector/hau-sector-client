@@ -1,7 +1,7 @@
 describe('Голосования', () => {
   beforeEach(() => {
     cy.visit('/votes')
-    cy.wait(100)
+    cy.selectProperty()
   })
 
   it('Пользователь может просматривать все голосования', () => {

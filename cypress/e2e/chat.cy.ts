@@ -1,7 +1,7 @@
 describe('Чат', () => {
   beforeEach(() => {
     cy.visit('/chat')
-    cy.wait(100)
+    cy.selectProperty()
   })
 
   it('Пользователю доступен список жильцов его дома', () => {
