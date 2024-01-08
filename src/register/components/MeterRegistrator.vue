@@ -134,9 +134,6 @@ function submit() {
             :disabled="inputReached"
             :min-fraction-digits="2"
             :max-fraction-digits="3"
-            :pt="{
-              input: { 'data-test': 'meter-input-value' },
-            }"
             @keyup.enter="submit"
             @input="value = $event.value"
           />

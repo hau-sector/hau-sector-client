@@ -2,7 +2,7 @@ import path from 'node:path'
 import Vue from '@vitejs/plugin-vue'
 import { VitePWA } from 'vite-plugin-pwa'
 import SvgLoader from 'vite-svg-loader'
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   base: './',
@@ -10,6 +10,17 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
+    },
+  },
+
+  server: {
+    watch: {
+      ignored: [
+        'coverage/**/*',
+        'dist/**/*',
+        'cypress/**/*',
+        'tests/**/*',
+      ],
     },
   },
 

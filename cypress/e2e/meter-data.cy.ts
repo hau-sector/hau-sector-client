@@ -20,7 +20,7 @@ describe('Внесение данных счетчиков', () => {
 
   it('Пользователь может скорректировать внесенные данные, если он совершил ошибку',
     () => {
-      cy.get('[data-test="meter-input-value"]').first()
+      cy.get('[data-test="meter-input"] input').first()
         .should('exist').and('be.visible')
         .type('200,30')
 
@@ -31,13 +31,13 @@ describe('Внесение данных счетчиков', () => {
       cy.get('[data-test="meter-button-label"').first()
         .should('contain.text', 'Изменить')
 
-      cy.get('[data-test="meter-input-value"]').first()
+      cy.get('[data-test="meter-input"] input').first()
         .clear().type('111')
 
       cy.get('[data-test="meter-button"').first()
         .click()
 
-      cy.get('[data-test="meter-input-value"]').first()
+      cy.get('[data-test="meter-input"] input').first()
         .should('contain.value', '111')
     })
 
