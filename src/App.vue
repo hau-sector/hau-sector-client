@@ -11,7 +11,10 @@ import { useAuthStore } from '@/shared/stores/auth'
 
 if (!window.Cypress) {
   const { error, loginWithRedirect } = useAuthStore()
-  whenever(() => error.value, () => loginWithRedirect())
+  whenever(() => error.value, () => {
+    alert(JSON.stringify(error.value))
+    return loginWithRedirect()
+  })
 }
 
 const router = useRouter()
