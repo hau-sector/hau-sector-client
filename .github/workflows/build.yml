@@ -18,7 +18,7 @@ jobs:
       - name: Rollback Release
         uses: author/action-rollback@stable
         with:
-          id: ${{ ${{ github.event.release.id }} }}
+          id: ${{ github.event.release.id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
