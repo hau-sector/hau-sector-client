@@ -10,8 +10,8 @@ import TransitionFade from '@/shared/components/TransitionFade.vue'
 import { useAuthStore } from '@/shared/stores/auth'
 
 if (!window.Cypress) {
-  const { isLoading, isAuthenticated, loginWithRedirect } = useAuthStore()
-  whenever(() => !isLoading.value && !isAuthenticated.value, () => loginWithRedirect())
+  const { error, loginWithRedirect } = useAuthStore()
+  whenever(() => error.value, () => loginWithRedirect())
 }
 
 const router = useRouter()
