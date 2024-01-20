@@ -11,7 +11,7 @@ import { RouteName } from '@/shared/constants/route-name'
 
 vi.mock('@/shared/stores/auth', () => ({
   useAuthStore: () => ({
-    isLoading: ref(true),
+    error: ref(false),
   }),
 }))
 vi.mock('@/shared/stores/flats', () => ({
