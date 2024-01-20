@@ -8,13 +8,27 @@ jobs:
   test:
     uses: './.github/workflows/test.yml'
 
+  rollback:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs: [test]
+    if: failure()
+    steps:
+      - name: Rollback Release
+        uses: author/action-rollback@stable
+        with:
+          id: ${{ ${{ github.event.release.id }} }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
     runs-on: ubuntu-latest
     permissions:
       packages: write
       contents: read
     needs: [test]
-    if: ${{ success() }}
+    if: success()
     steps:
       - name: Checkout
         uses: actions/checkout@v3
