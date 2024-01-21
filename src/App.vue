@@ -1,21 +1,12 @@
 <script lang="ts" setup>
-import { tryOnMounted, whenever } from '@vueuse/core'
-import { useRouter } from 'vue-router'
+import { tryOnMounted } from '@vueuse/core'
 import Toast from 'primevue/toast'
-import TheThemeInjector from '@/core/components/TheThemeInjector.vue'
-import TheSideMenu from '@/core/components/TheSideMenu.vue'
+import { useRouter } from 'vue-router'
 import TheHeader from '@/core/components/TheHeader.vue'
-import { useFlatsStore } from '@/shared/stores/flats'
+import TheSideMenu from '@/core/components/TheSideMenu.vue'
+import TheThemeInjector from '@/core/components/TheThemeInjector.vue'
 import TransitionFade from '@/shared/components/TransitionFade.vue'
-import { useAuthStore } from '@/shared/stores/auth'
-
-if (!window.Cypress) {
-  const { error, loginWithRedirect } = useAuthStore()
-  whenever(() => error.value, () => {
-    alert(JSON.stringify(error.value))
-    return loginWithRedirect()
-  })
-}
+import { useFlatsStore } from '@/shared/stores/flats'
 
 const router = useRouter()
 async function preload() {
